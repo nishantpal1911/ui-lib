@@ -1,0 +1,56 @@
+@import 'tailwindcss';
+
+@tailwind utilities;
+
+:root {
+  --color-primary: 69 188 229; /* Blue */
+  --color-primary-hover: 43 161 202; /* More blue */
+  --color-secondary: 45 109 169; /* Deep Blue */
+  --color-tertiary: 30 41 59; /* Midnight Blue */
+  --color-success: 0 192 77; /* Green */
+  --color-danger: 255 90 90; /* Red */
+  --color-warning: 234 179 8; /* Yellow */
+
+  --color-black: 0 0 0; /* Black */
+}
+
+@layer base {
+  h1 {
+    @apply text-5xl font-bold;
+  }
+  h2 {
+    @apply text-4xl font-bold;
+  }
+  h3 {
+    @apply text-3xl font-semibold;
+  }
+  h4 {
+    @apply text-2xl font-semibold;
+  }
+  h5 {
+    @apply text-xl font-medium;
+  }
+  h6 {
+    @apply text-lg;
+  }
+
+  a {
+    /* @apply text-primary-hover underline; */
+  }
+}
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+
+  /* @apply text-black; */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

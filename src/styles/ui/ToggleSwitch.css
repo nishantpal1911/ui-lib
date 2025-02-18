@@ -1,0 +1,27 @@
+.toggle-switch {
+  & .success,
+  & span.success {
+    /* @apply text-success; */
+
+    & .MuiSwitch-switchBase {
+      /* @apply text-success; */
+    }
+
+    & .MuiSwitch-track {
+      /* @apply bg-success; */
+    }
+  }
+
+  & .error,
+  & span.error {
+    /* @apply text-danger; */
+
+    & .MuiSwitch-switchBase {
+      /* @apply text-danger; */
+    }
+
+    & .MuiSwitch-track {
+      /* @apply bg-danger; */
+    }
+  }
+}
