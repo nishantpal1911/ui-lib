@@ -1,7 +1,6 @@
 import { ChangeEvent, ComponentProps, useRef, useState } from 'react';
 
-import Button from 'src/components/ui/Button';
-import InlineFeedback from 'src/components/ui/InlineFeedback';
+import { Button, InlineFeedback } from 'src/components/ui';
 
 interface Props extends Omit<ComponentProps<typeof Button>, 'onError' | 'onClick'> {
   onFileChange: (file: File) => void;

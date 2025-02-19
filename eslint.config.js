@@ -10,9 +10,11 @@ import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import { fixupPluginRules } from '@eslint/compat';
+import storybook from 'eslint-plugin-storybook';
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules'] },
+  { ignores: ['dist', 'node_modules', '!.storybook'] },
+  ...storybook.configs['flat/recommended'],
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {

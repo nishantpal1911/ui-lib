@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 
-import Button from 'src/components/ui/Button';
+import { Button } from 'src/components/ui';
 
 export interface ButtonTabProps {
   isActive?: boolean;

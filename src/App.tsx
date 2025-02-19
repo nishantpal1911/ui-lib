@@ -22,7 +22,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className='card'>
-        <Button text={`count is ${count}`} intent='tertiary' outlined onClick={() => setCount((count) => count + 1)} />
+        <Button text={`count is ${count}`} outlined onClick={() => setCount((count) => count + 1)} />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
