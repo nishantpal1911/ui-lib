@@ -40,6 +40,7 @@ export default tseslint.config(
       'no-var': 'error',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-explicit-any': 'off',
       'prefer-const': 'error',
       eqeqeq: ['error', 'smart'],
       'newline-before-return': 'error',

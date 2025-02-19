@@ -1,17 +1,26 @@
-@import 'tailwindcss';
+@import 'tailwindcss' important;
 
-@tailwind utilities;
+@theme {
+  /* -------------------------------------------------------------------------- */
+  /*                                   Colors                                   */
+  /* -------------------------------------------------------------------------- */
 
-:root {
-  --color-primary: 69 188 229; /* Blue */
-  --color-primary-hover: 43 161 202; /* More blue */
-  --color-secondary: 45 109 169; /* Deep Blue */
-  --color-tertiary: 30 41 59; /* Midnight Blue */
-  --color-success: 0 192 77; /* Green */
-  --color-danger: 255 90 90; /* Red */
-  --color-warning: 234 179 8; /* Yellow */
+  --color-primary: rgb(69, 188, 229); /* Blue */
+  --color-primary-hover: rgb(43, 161, 202); /* More blue */
+  --color-secondary: rgb(45, 109, 169); /* Deep Blue */
+  --color-tertiary: rgb(30, 41, 59); /* Midnight Blue */
+  --color-success: rgb(0, 192, 77); /* Green */
+  --color-danger: rgb(255, 90, 90); /* Red */
+  --color-warning: rgb(234, 179, 8); /* Yellow */
 
-  --color-black: 0 0 0; /* Black */
+  --color-black: rgb(0, 0, 0); /* Black */
+
+  /* -------------------------------------------------------------------------- */
+  /*                                    Blur                                    */
+  /* -------------------------------------------------------------------------- */
+
+  --blur-xs: 1px;
+  --blur-2xs: 2px;
 }
 
 @layer base {
@@ -35,7 +44,7 @@
   }
 
   a {
-    /* @apply text-primary-hover underline; */
+    @apply text-primary-hover underline;
   }
 }
 
@@ -48,7 +57,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 
-  /* @apply text-black; */
+  @apply text-black;
 }
 
 code {

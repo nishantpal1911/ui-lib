@@ -74,7 +74,9 @@ export default function Dropdown({
     ...(passInternalProp && {
       onSelectInternal: (value?: string) => {
         props.onSelect?.(value);
-        collapseOnSelect && props.closeMenu?.();
+        if (collapseOnSelect) {
+          props.closeMenu?.();
+        }
       },
     }),
     ...(props.showBgOnSelected && { showBgOnSelected: props.showBgOnSelected }),

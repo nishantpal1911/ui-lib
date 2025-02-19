@@ -2,7 +2,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 import { cva, VariantProps } from 'class-variance-authority';
-import React, { PropsWithChildren, useRef, useState } from 'react';
+import React, { JSX, PropsWithChildren, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Button } from 'src/components/ui';
@@ -25,9 +25,9 @@ const styles = cva('w-full justify-between font-medium has-[span]:text-black hov
   variants: {
     size: {
       xs: 'pl-3',
-      sm: 'pl-4 pr-2',
+      sm: 'pr-2 pl-4',
       md: 'pl-4',
-      lg: 'pl-5 pr-3',
+      lg: 'pr-3 pl-5',
     },
   },
   defaultVariants: {

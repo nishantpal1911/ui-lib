@@ -7,7 +7,7 @@ interface Props {
   toast: Toast;
 }
 
-const styles = cva('absolute bottom-0 h-1 w-full rounded-bl-md rounded-br-md', {
+const styles = cva('absolute bottom-0 h-1 w-full rounded-br-md rounded-bl-md', {
   variants: {
     type: {
       success: 'bg-success',

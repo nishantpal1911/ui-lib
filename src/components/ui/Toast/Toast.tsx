@@ -25,6 +25,7 @@ const styles = cva(`${css.transition} relative h-fit w-96 rounded-md bg-white op
 const Toast = memo(function Toast(props: Props) {
   const [isVisible, setIsVisible] = useState(false);
 
+  // TODO: Move to React Transitions
   useEffect(() => {
     setIsVisible(true);
   }, []);

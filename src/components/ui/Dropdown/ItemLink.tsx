@@ -1,4 +1,3 @@
-import { cva } from 'class-variance-authority';
 import { Link, LinkProps } from 'react-router-dom';
 
 import { dropdownItemDefaultStyles } from 'src/components/ui/Dropdown';
@@ -13,13 +12,14 @@ interface Props extends LinkProps {
   onSelectInternal?: (value?: string) => void;
 }
 
-const styles = cva(`${dropdownItemDefaultStyles()} text-black no-underline`);
+const styles = (className?: string) =>
+  dropdownItemDefaultStyles({ className: `text-black no-underline ${className || ''}` });
 
 export default function DropdownItemLink(props: Props & TextOrChildren) {
   const { children, className, onSelectInternal, text, to, value } = props;
 
   return (
-    <Link to={to} className={styles({ className })} onClick={() => onSelectInternal?.(value)}>
+    <Link to={to} className={styles(className)} onClick={() => onSelectInternal?.(value)}>
       {text || children}
     </Link>
   );

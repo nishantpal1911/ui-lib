@@ -5,7 +5,6 @@ export { default as DatePicker } from 'src/components/ui/DatePicker';
 export { default as InlineFeedback } from 'src/components/ui/InlineFeedback';
 export { default as Modal } from 'src/components/ui/Modal';
 export { default as OverlayScroll } from 'src/components/ui/OverlayScroll';
-export { default as SearchBox } from 'src/components/ui/SearchBox';
 export { default as Select } from 'src/components/ui/Select';
 export { default as Timer } from 'src/components/ui/Timer';
 export { default as ToggleSwitch } from 'src/components/ui/ToggleSwitch';

@@ -26,7 +26,7 @@ const styles = cva(`${css.spin} z-[9999] inline-block rounded-full border-slate-
 
 export function PageLoader() {
   return ReactDOM.createPortal(
-    <div className='bg-opacity-80 fixed top-0 left-0 z-[9999] min-h-lvh w-full bg-gray-300 p-4 backdrop-blur-sm'>
+    <div className='bg-opacity-80 fixed top-0 left-0 z-[9999] min-h-lvh w-full bg-gray-300 p-4 backdrop-blur-xs'>
       <LoadingSpinner size='2xl' className='fixed top-1/3 right-0 left-0 mx-auto' />
     </div>,
     document.getElementById('page-loader-outlet') as HTMLElement
@@ -35,7 +35,7 @@ export function PageLoader() {
 
 export function ContainerLoader() {
   return (
-    <div className='backdrop-blur-2xs absolute top-0 left-0 z-50 h-full w-full p-4'>
+    <div className='absolute top-0 left-0 z-50 h-full w-full p-4 backdrop-blur-xs'>
       <LoadingSpinner size='xl' className='absolute top-1/3 right-0 left-0 mx-auto' />
     </div>
   );

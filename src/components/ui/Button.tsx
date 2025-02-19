@@ -1,6 +1,7 @@
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 import { cva, VariantProps } from 'class-variance-authority';
 import React, { ComponentProps } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { LoadingSpinner } from 'src/components/ui/Loader';
 import css from 'src/styles/ui/Button.module.css';
@@ -24,16 +25,17 @@ interface Props
     Omit<VariantProps<typeof buttonStyles>, 'disabled' | 'icon' | 'iconPlacement'>,
     ButtonProps {}
 
+// TODO: Remove bg-opacity
 const buttonStyles = cva(
-  `${css.transition} hover:bg-opacity-90 relative rounded-md select-none focus:outline-offset-2`,
+  `${css.transition} hover:bg-opacity-90 relative cursor-pointer rounded-md select-none focus:outline-offset-2`,
   {
     variants: {
       intent: {
-        primary: 'bg-primary text-white shadow',
-        secondary: 'bg-secondary text-white shadow',
+        primary: 'bg-primary hover:bg-primary/90 text-white shadow-sm',
+        secondary: 'bg-secondary hover:bg-secondary/90 text-white shadow-sm',
         tertiary: 'text-gray-500 hover:bg-gray-50 hover:text-gray-700',
-        danger: 'bg-danger text-white shadow',
-        success: 'bg-success text-white',
+        danger: 'bg-danger hover:bg-danger/90 text-white shadow-sm',
+        success: 'bg-success hover:bg-success/90 text-white',
         unstyled: 'has-[*]:p-0',
       },
       outlined: {
@@ -71,7 +73,7 @@ const buttonStyles = cva(
         outlined: true,
         intent: 'primary',
         className:
-          'border-primary hover:border-primary-hover hover:bg-primary/0 hover:text-primary-hover has-[*]:text-primary',
+          'border-primary hover:border-primary-hover hover:bg-primary/5 hover:text-primary-hover has-[*]:text-primary',
       },
       {
         outlined: true,
@@ -139,16 +141,18 @@ export default function Button({
   return (
     <button
       ref={buttonRef}
-      className={buttonStyles({
-        intent,
-        outlined,
-        icon: !!icon,
-        iconPlacement: icon?.placement,
-        disabled: disabled || loading,
-        size,
-        rounded,
-        className,
-      })}
+      className={twMerge(
+        buttonStyles({
+          intent,
+          outlined,
+          icon: !!icon,
+          iconPlacement: icon?.placement,
+          disabled: disabled || loading,
+          size,
+          rounded,
+        }),
+        className
+      )}
       type={type || 'button'}
       disabled={disabled || loading}
       onClick={onClick}

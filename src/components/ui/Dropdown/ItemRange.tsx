@@ -1,5 +1,4 @@
 import Slider, { SliderProps } from '@mui/material/Slider';
-import { cva } from 'class-variance-authority';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Checkbox from 'src/components/ui/Checkbox';
@@ -15,7 +14,8 @@ interface Props extends Omit<SliderProps, 'onChange' | 'onChangeCommitted' | 'va
   onChange?: (value: number[]) => void;
 }
 
-const styles = cva(dropdownItemDefaultStyles({ showBgOnHover: false, className: 'px-6' }));
+const styles = (className?: string) =>
+  dropdownItemDefaultStyles({ showBgOnHover: false, className: `px-6 ${className || ''}` });
 
 const getCorrectedGranularity = (labelGranularity: number) => {
   if (labelGranularity > 1) return 1;
@@ -88,7 +88,7 @@ export default function DropdownItemRange({
   }, [hasUpperLimit, labelGranularity, max, min, step]);
 
   return (
-    <div className={styles({ className })}>
+    <div className={styles(className)}>
       <div className='mb-3 grid grid-flow-col'>
         {label && <span className='text-sm'>{label}</span>}
         <Checkbox
@@ -106,7 +106,7 @@ export default function DropdownItemRange({
         valueLabelDisplay='auto'
         value={hasUpperLimit ? internalValue : internalValue[0]}
         track={hasUpperLimit ? 'normal' : 'inverted'}
-        onChange={(_event, updatedValue, thumb) => handleValueChange(updatedValue, thumb)}
+        onChange={(_event, updatedValue) => handleValueChange(updatedValue)}
         onChangeCommitted={() => commitChange(internalValue)}
         max={max}
         step={step}

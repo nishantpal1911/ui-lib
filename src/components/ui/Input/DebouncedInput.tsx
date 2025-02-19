@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { inputContainerStyles, inputStyles } from 'src/components/ui/Input';
 
-export interface DebouncedInputProps {
+interface DebouncedInputOptions {
   label?: string;
   value?: string;
   debounceMS?: number;
@@ -12,7 +12,9 @@ export interface DebouncedInputProps {
   onChangeValue?: (value: string) => void;
 }
 
-interface Props extends Omit<ComponentProps<'input'>, 'type' | 'value'>, DebouncedInputProps {}
+interface Props extends Omit<ComponentProps<'input'>, 'type' | 'value'>, DebouncedInputOptions {}
+
+export type { Props as DebouncedInputProps };
 
 const generateId = () => `DebouncedInput__${uuidv4()}`;
 

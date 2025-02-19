@@ -32,10 +32,11 @@ type Props = TogglePropsOrLabel &
     onToggle?: (checked: boolean) => void;
   };
 
+// TODO: Remove text-opacity
 const containerStyles = cva('toggle-switch cursor-pointer *:cursor-pointer', {
   variants: {
     disabled: {
-      true: 'has-[*]:cursor-default has-[*]:text-gray-400 has-[*]:text-opacity-70 *:has-[*]:cursor-default hover:has-[*]:text-opacity-70',
+      true: 'has-[*]:text-opacity-70 hover:has-[*]:text-opacity-70 has-[*]:cursor-default has-[*]:text-gray-400 *:has-[*]:cursor-default',
     },
   },
 });
@@ -55,7 +56,7 @@ const toggleTextStyles = cva('', {
       false: 'opacity-75 hover:opacity-100',
     },
     disabled: {
-      true: '!opacity-100',
+      true: 'opacity-100!',
     },
   },
 });
