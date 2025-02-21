@@ -1,20 +1,26 @@
 import AddReactionIcon from '@mui/icons-material/AddReaction';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
+import { InputType } from 'storybook/internal/types';
 
 import Button from 'src/components/ui/Button/Button';
-import 'src/index.css';
+
+type ExtendedArgTypes<T> = Partial<ArgTypes<T>> & {
+  iconPlacement?: InputType;
+  iconSize?: InputType;
+  icon?: InputType;
+};
 
 const INTENTS = ['primary', 'secondary', 'tertiary', 'danger', 'success', 'unstyled'];
 const SIZES = ['xs', 'sm', 'md', 'lg'];
+const ICON_SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+
+const disabledArgs = ['onClick', 'buttonRef'];
 
 const meta: Meta<typeof Button> = {
   title: 'UI/Button',
   component: Button,
-  parameters: {
-    layout: 'centered',
-  },
-  tags: ['autodocs'],
+  parameters: { layout: 'centered' },
   argTypes: {
     intent: {
       control: 'select',
@@ -59,14 +65,30 @@ const meta: Meta<typeof Button> = {
       },
     },
     icon: {
-      control: 'select',
-      options: [null, 'left', 'right'],
-      mapping: {
-        left: { svg: AddReactionIcon },
-        right: { svg: AddReactionIcon, placement: 'right' },
-      },
+      control: 'boolean',
       table: {
         category: 'icon',
+      },
+    },
+    iconPlacement: {
+      name: 'icon.placement',
+      control: 'select',
+      type: 'string',
+      options: ['left', 'right'],
+      table: {
+        category: 'icon',
+        defaultValue: { summary: 'left' },
+        type: { summary: 'left | right' },
+      },
+    },
+    iconSize: {
+      name: 'icon.size',
+      control: 'select',
+      type: 'string',
+      options: [null, ...ICON_SIZES],
+      table: {
+        category: 'icon',
+        type: { summary: ICON_SIZES.join(' | ') },
       },
     },
     disabled: {
@@ -77,22 +99,26 @@ const meta: Meta<typeof Button> = {
         defaultValue: { summary: 'false' },
       },
     },
-    onClick: {
-      table: { disable: true },
-    },
-    buttonRef: {
-      table: { disable: true },
-    },
-  },
-  args: { onClick: fn() },
+    ...disabledArgs.reduce((acc, key) => ({ ...acc, [key]: { table: { disable: true } } }), {}),
+  } as ExtendedArgTypes<typeof Button>,
+  args: { text: 'Button', onClick: fn() },
 };
 
-export default meta;
+const Template: StoryFn<typeof Button> = ({ icon, iconPlacement, iconSize, ...args }: any) => {
+  const iconProp =
+    icon ?
+      {
+        svg: AddReactionIcon,
+        placement: iconPlacement,
+        size: iconSize,
+      }
+    : undefined;
+
+  return <Button {...args} icon={iconProp} />;
+};
 
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
-  args: {
-    text: 'Button',
-  },
-};
+export const Primary: Story = Template.bind({});
+
+export default meta;

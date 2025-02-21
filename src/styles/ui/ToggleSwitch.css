@@ -1,5 +1,5 @@
 /* TODO: Removing this leads to error. Can this be fixed? */
-@reference '../../index.css';
+@reference '../index.css';
 
 .toggle-switch {
   & .success,

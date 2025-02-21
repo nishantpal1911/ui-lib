@@ -1,7 +1,7 @@
 import Collapse from '@mui/material/Collapse';
 import { cva, VariantProps } from 'class-variance-authority';
 import 'overlayscrollbars/styles/overlayscrollbars.css';
-import React, { Children, CSSProperties, PropsWithChildren, useEffect, useRef } from 'react';
+import React, { Children, CSSProperties, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
 
@@ -33,6 +33,8 @@ const containerStyles = cva('relative z-10 flex h-0', {
   },
 });
 
+const OUTLET_ID = 'dropdown-outlet';
+
 export default function Dropdown({
   collapseOnSelect = true,
   eagerLoad = false,
@@ -40,8 +42,18 @@ export default function Dropdown({
   ...props
 }: PropsWithChildren<Props>) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [dropdownOutlet, setDropdownOutlet] = useState(() => document.getElementById(OUTLET_ID));
 
   useEffect(() => {
+    // Create & attach dropdown outlet div if it doesn't exist.
+    const [body] = document.getElementsByTagName('body');
+    if (!dropdownOutlet) {
+      const div = document.createElement('div');
+      div.id = OUTLET_ID;
+      body.appendChild(div);
+      setDropdownOutlet(div);
+    }
+
     const handleScroll = () => {
       props.closeMenu?.();
     };
@@ -84,25 +96,26 @@ export default function Dropdown({
 
   return (
     <div ref={containerRef} className={containerStyles({ position: props.position })}>
-      {ReactDOM.createPortal(
-        <Collapse
-          className='absolute rounded-lg bg-white shadow-xl'
-          style={getSizeAndPositionStyles(containerRef.current)}
-          in={props.isOpen}
-          mountOnEnter={!eagerLoad}
-          unmountOnExit={!eagerLoad}
-        >
-          <OutsideClickHandler onOutsideClick={onOutsideClick} disabled={!props.isOpen}>
-            <OverlayScroll className={`flex flex-col py-2 font-semibold ${props.className || ''}`}>
-              {props.children &&
-                Children.map(props.children, (child, index) =>
-                  React.isValidElement(child) ? React.cloneElement(child, { key: index, ...childProps }) : child
-                )}
-            </OverlayScroll>
-          </OutsideClickHandler>
-        </Collapse>,
-        document.getElementById('dropdown-outlet') as HTMLElement
-      )}
+      {dropdownOutlet &&
+        ReactDOM.createPortal(
+          <Collapse
+            className='absolute rounded-lg bg-white shadow-xl'
+            style={getSizeAndPositionStyles(containerRef.current)}
+            in={props.isOpen}
+            mountOnEnter={!eagerLoad}
+            unmountOnExit={!eagerLoad}
+          >
+            <OutsideClickHandler onOutsideClick={onOutsideClick} disabled={!props.isOpen}>
+              <OverlayScroll className={`flex flex-col py-2 font-semibold ${props.className || ''}`}>
+                {props.children &&
+                  Children.map(props.children, (child, index) =>
+                    React.isValidElement(child) ? React.cloneElement(child, { key: index, ...childProps }) : child
+                  )}
+              </OverlayScroll>
+            </OutsideClickHandler>
+          </Collapse>,
+          dropdownOutlet
+        )}
     </div>
   );
 }

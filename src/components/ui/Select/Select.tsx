@@ -39,14 +39,15 @@ const generateId = () => `Select__${uuidv4()}`;
 
 export default function Select(props: PropsWithChildren<Props>) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const idRef = useRef(props.id || (props.label ? generateId() : undefined));
+  const trimmedLabel = props.label?.trim();
+  const idRef = useRef(props.id || (trimmedLabel ? generateId() : undefined));
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div className={`flex min-w-fit flex-col ${props.containerClass || ''}`}>
-      {props.label && (
+      {trimmedLabel && (
         <label className='pointer-events-none mb-2 inline-block font-bold' htmlFor={idRef.current}>
-          {props.label}
+          {trimmedLabel}
         </label>
       )}
 
