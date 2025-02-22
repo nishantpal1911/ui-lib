@@ -5,18 +5,21 @@ import React, { Children, CSSProperties, PropsWithChildren, useEffect, useRef, u
 import ReactDOM from 'react-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
 
+import { ButtonSize } from 'src/components/ui';
 import OverlayScroll from 'src/components/ui/OverlayScroll';
 
 interface Props extends VariantProps<typeof containerStyles> {
   className?: string;
   isOpen?: boolean;
-  passInternalProp?: boolean;
   showBgOnSelected?: boolean;
-  eagerLoad?: boolean;
   collapseOnSelect?: boolean;
+  eagerLoad?: boolean;
   triggerRef?: React.RefObject<HTMLButtonElement>;
   closeMenu?: () => void;
   onSelect?: (value?: string) => void;
+  passInternalProp?: boolean;
+  // Passes to children
+  size?: ButtonSize;
 }
 
 const containerStyles = cva('relative z-10 flex h-0', {
@@ -87,9 +90,10 @@ export default function Dropdown({
       onSelectInternal: (value?: string) => {
         props.onSelect?.(value);
         if (collapseOnSelect) {
-          props.closeMenu?.();
+          setTimeout(() => props.closeMenu?.(), 100);
         }
       },
+      size: props.size,
     }),
     ...(props.showBgOnSelected && { showBgOnSelected: props.showBgOnSelected }),
   };
@@ -104,9 +108,11 @@ export default function Dropdown({
             in={props.isOpen}
             mountOnEnter={!eagerLoad}
             unmountOnExit={!eagerLoad}
+            timeout={{ enter: 150, exit: 100 }}
+            easing='ease-out'
           >
             <OutsideClickHandler onOutsideClick={onOutsideClick} disabled={!props.isOpen}>
-              <OverlayScroll className={`flex flex-col py-2 font-semibold ${props.className || ''}`}>
+              <OverlayScroll className={`flex flex-col py-2 ${props.className || ''}`}>
                 {props.children &&
                   Children.map(props.children, (child, index) =>
                     React.isValidElement(child) ? React.cloneElement(child, { key: index, ...childProps }) : child

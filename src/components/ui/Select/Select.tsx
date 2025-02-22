@@ -1,17 +1,15 @@
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { cva, VariantProps } from 'class-variance-authority';
 import React, { JSX, PropsWithChildren, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Button } from 'src/components/ui';
+import { Button, ButtonSize } from 'src/components/ui';
+import { tailwindCVA } from 'src/utils/cva';
 
-interface Props extends VariantProps<typeof styles> {
+interface Props {
   id?: string;
   label?: string;
-  className?: string;
-  containerClass?: string;
   selectedOption?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -19,21 +17,14 @@ interface Props extends VariantProps<typeof styles> {
     svg: typeof SvgIcon;
     styles?: SvgIconProps;
   };
+  // Styling
+  className?: string;
+  containerClass?: string;
+  rounded?: boolean;
+  size?: ButtonSize;
 }
 
-const styles = cva('w-full justify-between font-medium has-[span]:text-black hover:has-[span]:text-black', {
-  variants: {
-    size: {
-      xs: 'pl-3',
-      sm: 'pr-2 pl-4',
-      md: 'pl-4',
-      lg: 'pr-3 pl-5',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
+const styles = tailwindCVA('w-full justify-between font-medium text-black');
 
 const generateId = () => `Select__${uuidv4()}`;
 
@@ -51,21 +42,22 @@ export default function Select(props: PropsWithChildren<Props>) {
         </label>
       )}
 
-      <div className={props.className}>
+      <div>
         <Button
           id={idRef.current}
           buttonRef={triggerRef}
           intent='tertiary'
           outlined
+          rounded={props.rounded}
           size={props.size}
           text={props.selectedOption || props.placeholder || 'Select'}
           icon={{
             svg: props.icon?.svg || (isDropdownOpen ? ArrowDropUpIcon : ArrowDropDownIcon),
             placement: 'right',
-            styles: { ...(props.icon?.styles || {}), fontSize: props.size === 'lg' ? 'large' : 'medium' },
+            styles: props.icon?.styles,
           }}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className={styles({ size: props.size })}
+          className={styles({ className: props.className })}
           disabled={props.disabled}
         />
         {props.children && (
@@ -73,6 +65,7 @@ export default function Select(props: PropsWithChildren<Props>) {
             {React.cloneElement(props.children as JSX.Element, {
               isOpen: isDropdownOpen,
               triggerRef,
+              size: props.size,
               closeMenu: () => setIsDropdownOpen(false),
             })}
           </>

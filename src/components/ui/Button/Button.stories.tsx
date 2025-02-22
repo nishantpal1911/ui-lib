@@ -3,16 +3,23 @@ import type { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { InputType } from 'storybook/internal/types';
 
-import Button from 'src/components/ui/Button/Button';
+import { Button } from 'src/components/ui';
 
 type ExtendedArgTypes<T> = Partial<ArgTypes<T>> & {
   iconPlacement?: InputType;
   iconSize?: InputType;
+  // TODO: Modify type to auto inherit default args
   icon?: InputType;
+  intent?: InputType;
+  outlined?: InputType;
+  rounded?: InputType;
+  size?: InputType;
+  loading?: InputType;
+  disabled?: InputType;
 };
 
 const INTENTS = ['primary', 'secondary', 'tertiary', 'danger', 'success', 'unstyled'];
-const SIZES = ['xs', 'sm', 'md', 'lg'];
+const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
 const ICON_SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
 
 const disabledArgs = ['onClick', 'buttonRef'];
