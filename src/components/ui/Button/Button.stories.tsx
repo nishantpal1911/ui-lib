@@ -1,6 +1,5 @@
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import type { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { InputType } from 'storybook/internal/types';
 
 import { Button } from 'src/components/ui';
@@ -66,6 +65,7 @@ const meta: Meta<typeof Button> = {
       },
     },
     loading: {
+      control: 'boolean',
       table: {
         category: 'state',
         defaultValue: { summary: 'false' },
@@ -108,7 +108,7 @@ const meta: Meta<typeof Button> = {
     },
     ...disabledArgs.reduce((acc, key) => ({ ...acc, [key]: { table: { disable: true } } }), {}),
   } as ExtendedArgTypes<typeof Button>,
-  args: { text: 'Button', onClick: fn() },
+  args: { text: 'Button' },
 };
 
 const Template: StoryFn<typeof Button> = ({ icon, iconPlacement, iconSize, ...args }: any) => {

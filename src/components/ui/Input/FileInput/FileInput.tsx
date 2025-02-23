@@ -1,3 +1,4 @@
+import { cx } from 'class-variance-authority';
 import { ChangeEvent, ComponentProps, useRef, useState } from 'react';
 
 import { Button, InlineFeedback } from 'src/components/ui';
@@ -8,15 +9,18 @@ interface Props extends Omit<ComponentProps<typeof Button>, 'onError' | 'onClick
   hideError?: boolean;
   onError?: (error: string, file: File) => void;
   fileType?: 'text/csv' | 'application/pdf';
+  containerClass?: string;
 }
 
 export default function FileInput({
+  containerClass,
   fileType,
   hideError,
   hideSelectedFile,
   onError,
   onFileChange,
   outlined = true,
+  size,
   ...restProps
 }: Props) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -45,18 +49,21 @@ export default function FileInput({
     setSelectedFile(file);
   };
 
+  const textClasses = cx('text-sm', size && ['xs', 'sm'].includes(size) && 'text-xs');
+
   return (
-    <div className='w-fit'>
-      <div className='flex flex-wrap items-center gap-2'>
-        <Button outlined={outlined} onClick={() => fileInputRef.current?.click()} {...restProps} />
-        {!hideSelectedFile && selectedFile && (
-          <p>
-            Chosen File: <span className='font-medium'>{selectedFile.name}</span>
-          </p>
-        )}
-        <input type='file' value='' ref={fileInputRef} className='hidden' onChange={handleFileInput} />
-      </div>
-      <InlineFeedback className='mt-2' showFeedback={!hideError && !!error} text={error || ''} />
+    <div className={containerClass}>
+      <Button outlined={outlined} size={size} onClick={() => fileInputRef.current?.click()} {...restProps} />
+
+      <input type='file' value='' ref={fileInputRef} className='hidden' onChange={handleFileInput} />
+
+      {!hideSelectedFile && selectedFile && (
+        <p className={`${textClasses} mt-2`}>
+          Chosen File: <span className='font-semibold'>{selectedFile.name}</span>
+        </p>
+      )}
+
+      <InlineFeedback className={`${textClasses} mt-1`} showFeedback={!hideError && !!error} text={error || ''} />
     </div>
   );
 }

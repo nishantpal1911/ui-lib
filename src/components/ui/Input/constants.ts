@@ -1,20 +1,25 @@
-import { cva } from 'class-variance-authority';
+import { tailwindCVA } from 'src/utils/cva';
 
-export const inputStyles = cva('h-full w-full min-w-12 focus-visible:outline-hidden', {
-  variants: {
-    disabled: {
-      true: 'text-gray-600',
-    },
-  },
-});
-
-export const inputContainerStyles = cva(
-  'flex h-10 max-h-12 items-center justify-between rounded-md border border-gray-600 bg-white px-3 focus-within:ring-2 focus-within:ring-blue-500',
+export const inputContainerStyles = tailwindCVA(
+  'flex items-center justify-between rounded-md border border-gray-700 bg-white px-2 focus-within:ring-2 focus-within:ring-blue-300',
   {
     variants: {
+      size: {
+        sm: 'min-h-6 text-sm',
+        md: 'min-h-7.5',
+        lg: 'min-h-9',
+      },
       rounded: {
-        true: 'rounded-full! px-5',
+        true: 'rounded-full px-3',
       },
     },
   }
 );
+
+export const inputStyles = tailwindCVA('h-full w-full focus-visible:outline-hidden', {
+  variants: {
+    disabled: {
+      true: 'disabled:text-gray-600',
+    },
+  },
+});

@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useMemo, useState } from 'react';
 
 import { Dropdown, DropdownItem, Select } from 'src/components/ui';
 
-export const _ItemSelect = ({ collapseOnSelect, optionsLength, ...args }: any) => {
+export const ItemSelectExample = ({ collapseOnSelect, optionsLength, ...args }: any) => {
   const [selectedOption, setSelectedOption] = useState<string>();
   const options = useMemo(
     () => new Array(optionsLength || 5).fill(0).map((_val, index) => `Item ${index + 1}`),

@@ -6,15 +6,18 @@ import { isAlphaNumeric, isInteger } from 'src/utils/validation';
 
 type InputType = 'text' | 'integer' | 'alphanum' | 'password';
 
-interface InputProps {
+interface InputOptions {
   label?: string;
   type?: InputType;
   containerClass?: string;
   rounded?: boolean;
-  onChangeValue?: (value: string) => void;
+  size?: 'sm' | 'md' | 'lg';
+  onChange?: (value: string, event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-interface Props extends Omit<ComponentProps<'input'>, 'type'>, InputProps {}
+interface Props extends Omit<ComponentProps<'input'>, 'type' | 'onChange' | 'size'>, InputOptions {}
+
+export type { Props as TextInputProps };
 
 const generateId = () => `TextInput__${uuidv4()}`;
 
@@ -26,8 +29,9 @@ export default function TextInput(props: PropsWithChildren<Props>) {
     disabled,
     id: propsId,
     label,
-    onChangeValue,
+    onChange,
     rounded,
+    size = 'md',
     type = 'text',
     ...restProps
   } = props;
@@ -44,26 +48,26 @@ export default function TextInput(props: PropsWithChildren<Props>) {
     return true;
   };
 
-  const handleValueChange = (updatedValue: string) => {
-    if (!onChangeValue || !isValueTypeValid(updatedValue)) return;
+  const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!onChange || !isValueTypeValid(event.target.value)) return;
 
-    onChangeValue(updatedValue);
+    onChange(event.target.value, event);
   };
 
   return (
-    <div className={`flex flex-col ${containerClass}`}>
+    <div className='flex flex-col'>
       {label && (
         <label className='mb-2' htmlFor={idRef.current}>
           {label}
         </label>
       )}
-      <div className={inputContainerStyles({ className, rounded })}>
+      <div className={inputContainerStyles({ className: containerClass, rounded, size })}>
         <input
-          className={inputStyles({ disabled })}
+          className={inputStyles({ disabled, className })}
           id={idRef.current}
           disabled={disabled}
           type={type === 'password' ? type : 'text'}
-          onChange={({ target }) => handleValueChange(target.value)}
+          onChange={handleValueChange}
           {...restProps}
         />
         {children}

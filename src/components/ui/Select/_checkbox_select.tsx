@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useMemo, useState } from 'react';
 
 import { Dropdown, DropdownItemCheckbox, Select } from 'src/components/ui';
@@ -9,7 +8,7 @@ const getCheckboxOptions = (optionsLength = 5): { value: string; isSelected: boo
     .map((_val, index) => ({ value: `Item ${index + 1}`, isSelected: false }));
 };
 
-export const _CheckboxSelect = ({ optionsLength, ...args }: any) => {
+export const CheckboxSelectExample = ({ optionsLength, ...args }: any) => {
   const [options, setOptions] = useState(() => getCheckboxOptions(optionsLength));
 
   useEffect(() => {
