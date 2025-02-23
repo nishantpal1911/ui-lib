@@ -1,8 +1,8 @@
 import Slider, { SliderProps } from '@mui/material/Slider';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import Checkbox from 'src/components/ui/Checkbox';
-import { dropdownItemDefaultStyles } from 'src/components/ui/Dropdown';
+import Checkbox from 'src/components/ui/Checkbox/Checkbox';
+// import { dropdownItemDefaultClasses } from 'src/components/ui/Dropdown';
 
 interface Props extends Omit<SliderProps, 'onChange' | 'onChangeCommitted' | 'value'> {
   value?: number[];
@@ -14,8 +14,8 @@ interface Props extends Omit<SliderProps, 'onChange' | 'onChangeCommitted' | 'va
   onChange?: (value: number[]) => void;
 }
 
-const styles = (className?: string) =>
-  dropdownItemDefaultStyles({ showBgOnHover: false, className: `px-6 ${className || ''}` });
+const styles = (className?: string) => className;
+//   dropdownItemDefaultClasses({ showBgOnHover: false, className: `px-6 ${className || ''}` });
 
 const getCorrectedGranularity = (labelGranularity: number) => {
   if (labelGranularity > 1) return 1;

@@ -24,7 +24,7 @@ type Config<T> =
 type Props<T> = T extends ConfigSchema ? ConfigVariants<T> & ClassProp : ClassProp;
 /* End of cva types */
 
-type PropsWithClass<T> = Omit<Props<T>, 'className'> & { className?: string };
+type PropsWithClass<T> = Omit<Props<T>, 'className'> & { className?: string | false };
 
 export const tailwindCVA =
   <T>(base?: ClassValue, config?: Config<T>) =>

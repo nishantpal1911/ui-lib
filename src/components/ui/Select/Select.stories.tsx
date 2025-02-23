@@ -1,8 +1,9 @@
 import type { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
-import { useMemo, useState } from 'react';
 import { InputType } from 'storybook/internal/types';
 
-import { Dropdown, DropdownItem } from 'src/components/ui';
+import { _CheckboxSelect } from 'src/components/ui/Select/_checkbox_select';
+import { _ItemSelect } from 'src/components/ui/Select/_item_select';
+import { _LinkSelect } from 'src/components/ui/Select/_link_select';
 import Select from 'src/components/ui/Select/Select';
 
 type ExtendedArgTypes<T> = Partial<ArgTypes<T>> & {
@@ -14,6 +15,7 @@ type ExtendedArgTypes<T> = Partial<ArgTypes<T>> & {
   label?: InputType;
   placeholder?: InputType;
   disabled?: InputType;
+  type?: InputType;
 };
 
 const disabledArgs = ['className', 'containerClass', 'selectedOption', 'icon', 'id'];
@@ -53,30 +55,35 @@ const meta: Meta<typeof Select> = {
     disabled: {
       table: { category: 'state' },
     },
+    type: {
+      type: 'string',
+      control: 'select',
+      options: ['item', 'checkbox', 'link', 'range'],
+      table: { category: 'type', defaultValue: { summary: 'select' } },
+    },
     ...disabledArgs.reduce((acc, key) => ({ ...acc, [key]: { table: { disable: true } } }), {}),
   } as ExtendedArgTypes<typeof Select>,
 };
 
-const Template: StoryFn<typeof Select> = ({ collapseOnSelect, optionsLength, ...args }: any) => {
-  const [selectedOption, setSelectedOption] = useState<string>();
-  const options = useMemo(
-    () => new Array(optionsLength || 5).fill(0).map((_val, index) => `Item ${index + 1}`),
-    [optionsLength]
-  );
+const MainTemplate: StoryFn<typeof Select> = ({ type, ...args }: any) => {
+  switch (type) {
+    case 'checkbox':
+      return <_CheckboxSelect {...args} />;
+    case 'link':
+      return <_LinkSelect {...args} />;
+  }
 
-  return (
-    <Select selectedOption={selectedOption} {...args}>
-      <Dropdown showBgOnSelected collapseOnSelect={collapseOnSelect} onSelect={setSelectedOption}>
-        {options.map((value, index) => (
-          <DropdownItem key={index} text={value} value={value} isSelected={value === selectedOption} />
-        ))}
-      </Dropdown>
-    </Select>
-  );
+  return <_ItemSelect {...args} />;
 };
 
 type Story = StoryObj<typeof Select>;
 
-export const PrimarySelect: Story = Template.bind({});
+export const Main: Story = MainTemplate.bind({});
+
+export const Item: Story = (_ItemSelect as StoryFn<typeof Select>).bind({});
+
+export const Checkbox: Story = (_CheckboxSelect as StoryFn<typeof Select>).bind({});
+
+export const Link: Story = (_LinkSelect as StoryFn<typeof Select>).bind({});
 
 export default meta;

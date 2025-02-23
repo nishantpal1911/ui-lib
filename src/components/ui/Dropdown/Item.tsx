@@ -1,7 +1,6 @@
-import { cva } from 'class-variance-authority';
+import { cva, cx } from 'class-variance-authority';
 
 import Button, { ButtonSize } from 'src/components/ui/Button/Button';
-import { tailwindCVA } from 'src/utils/cva';
 
 interface TextWithoutChildren {
   text: string;
@@ -29,13 +28,9 @@ type Props = TextOrChildren & {
   onSelectInternal?: (value?: string) => void;
 };
 
-const btnStyles = tailwindCVA('block w-full rounded-none text-left font-medium text-black transition-none', {
-  variants: {
-    shouldHighlightItem: { true: 'bg-blue-50 hover:bg-blue-50' },
-  },
-});
+export const dropdownItemDefaultClasses = 'w-full text-left font-medium text-black';
 
-const highlighterStyles = cva('absolute top-0 bottom-0 left-0 w-0.5 bg-blue-200', {
+const highlighterStyles = cva('absolute top-0 bottom-0 left-0 bg-blue-200', {
   variants: {
     size: {
       xs: 'w-0.5',
@@ -44,6 +39,9 @@ const highlighterStyles = cva('absolute top-0 bottom-0 left-0 w-0.5 bg-blue-200'
       lg: 'w-1',
       xl: 'w-1',
     },
+  },
+  defaultVariants: {
+    size: 'md',
   },
 });
 
@@ -62,7 +60,12 @@ export default function DropdownItem(props: Props) {
       text={props.text}
       disabled={props.disabled}
       onClick={selectHandler}
-      className={btnStyles({ shouldHighlightItem })}
+      className={cx(
+        dropdownItemDefaultClasses,
+        'rounded-none transition-none',
+        shouldHighlightItem && 'bg-blue-50 hover:bg-blue-50',
+        props.className
+      )}
     >
       {shouldHighlightItem && <div className={highlighterStyles({ size: props.size })} />}
       {props.children}

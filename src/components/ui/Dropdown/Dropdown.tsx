@@ -112,11 +112,14 @@ export default function Dropdown({
             easing='ease-out'
           >
             <OutsideClickHandler onOutsideClick={onOutsideClick} disabled={!props.isOpen}>
-              <OverlayScroll className={`flex flex-col py-2 ${props.className || ''}`}>
-                {props.children &&
-                  Children.map(props.children, (child, index) =>
-                    React.isValidElement(child) ? React.cloneElement(child, { key: index, ...childProps }) : child
-                  )}
+              <OverlayScroll>
+                {props.children && (
+                  <div className={`flex flex-col py-2 ${props.className || ''}`}>
+                    {Children.map(props.children, (child, index) =>
+                      React.isValidElement(child) ? React.cloneElement(child, { key: index, ...childProps }) : child
+                    )}
+                  </div>
+                )}
               </OverlayScroll>
             </OutsideClickHandler>
           </Collapse>,

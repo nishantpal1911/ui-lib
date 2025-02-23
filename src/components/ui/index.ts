@@ -1,6 +1,6 @@
 export { default as Button } from 'src/components/ui/Button/Button';
 export { default as ButtonTabs } from 'src/components/ui/ButtonTabs';
-export { default as Checkbox } from 'src/components/ui/Checkbox';
+export { default as Checkbox } from 'src/components/ui/Checkbox/Checkbox';
 export { default as DatePicker } from 'src/components/ui/DatePicker';
 export { default as InlineFeedback } from 'src/components/ui/InlineFeedback';
 export { default as Modal } from 'src/components/ui/Modal';
