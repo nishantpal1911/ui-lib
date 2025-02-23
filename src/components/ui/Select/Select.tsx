@@ -45,7 +45,7 @@ export default function Select(props: PropsWithChildren<Props>) {
       <div>
         <Button
           id={idRef.current}
-          buttonRef={triggerRef}
+          ref={triggerRef}
           intent='tertiary'
           outlined
           rounded={props.rounded}

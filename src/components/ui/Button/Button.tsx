@@ -20,7 +20,6 @@ interface ButtonProps {
   text?: string;
   icon?: IconProps;
   loading?: boolean;
-  buttonRef?: React.Ref<HTMLButtonElement>;
 }
 
 interface Props
@@ -124,7 +123,6 @@ const getIconSize = (size?: IconSize | null) => {
 };
 
 export default function Button({
-  buttonRef,
   children,
   className,
   disabled,
@@ -143,7 +141,6 @@ export default function Button({
 
   return (
     <button
-      ref={buttonRef}
       className={buttonStyles({
         intent,
         outlined,

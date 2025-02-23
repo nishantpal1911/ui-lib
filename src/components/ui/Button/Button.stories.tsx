@@ -22,7 +22,7 @@ const INTENTS = ['primary', 'secondary', 'tertiary', 'danger', 'success', 'unsty
 const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
 const ICON_SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
 
-const disabledArgs = ['onClick', 'buttonRef'];
+const disabledArgs = ['onClick'];
 
 const meta: Meta<typeof Button> = {
   title: 'UI/Button',
