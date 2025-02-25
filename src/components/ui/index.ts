@@ -8,13 +8,12 @@ export { default as OverlayScroll } from 'src/components/ui/OverlayScroll';
 export { default as Select } from 'src/components/ui/Select/Select';
 export { default as Slider } from 'src/components/ui/Slider/Slider';
 export { default as Timer } from 'src/components/ui/Timer';
-export { default as ToggleSwitch } from 'src/components/ui/ToggleSwitch';
+export { default as Switch } from 'src/components/ui/Switch/Switch';
 
 export * from 'src/components/ui/Button/Button';
 export * from 'src/components/ui/Tabs/Tabs';
 export * from 'src/components/ui/Dropdown';
-export * from 'src/components/ui/Form';
-export * from 'src/components/ui/Loader';
+export * from 'src/components/ui/Loader/Loader';
 export * from 'src/components/ui/Input';
 export * from 'src/components/ui/Modal/Modal';
 export * from 'src/components/ui/Slider/Slider';

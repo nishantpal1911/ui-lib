@@ -1,0 +1,69 @@
+/* TODO: Removing this leads to error. Can this be fixed? */
+@reference '../index.css';
+
+.toggle-switch {
+  & .success,
+  & span.success {
+    @apply text-success;
+
+    & .MuiSwitch-switchBase {
+      @apply text-success;
+    }
+
+    & .MuiSwitch-track {
+      @apply bg-success;
+    }
+  }
+
+  & .error,
+  & span.error {
+    @apply text-danger;
+
+    & .MuiSwitch-switchBase {
+      @apply text-danger;
+    }
+
+    & .MuiSwitch-track {
+      @apply bg-danger;
+    }
+  }
+
+  & .primary,
+  & span.primary {
+    @apply text-primary;
+
+    & .MuiSwitch-switchBase {
+      @apply text-primary;
+    }
+
+    & .MuiSwitch-track {
+      @apply bg-primary;
+    }
+  }
+
+  & .secondary,
+  & span.secondary {
+    @apply text-secondary;
+
+    & .MuiSwitch-switchBase {
+      @apply text-secondary;
+    }
+
+    & .MuiSwitch-track {
+      @apply bg-secondary;
+    }
+  }
+
+  & .warning,
+  & span.warning {
+    @apply text-warning;
+
+    & .MuiSwitch-switchBase {
+      @apply text-warning;
+    }
+
+    & .MuiSwitch-track {
+      @apply bg-warning;
+    }
+  }
+}
