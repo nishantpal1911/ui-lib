@@ -8,6 +8,11 @@ import { BrowserRouter } from 'react-router';
 
 import 'src/styles/index.css';
 
+// eslint-disable-next-line no-relative-import-paths/no-relative-import-paths
+import { ToastProvider } from '../src/context/Toast/Provider';
+
+const _Story = ({ storyFn }) => storyFn();
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -29,11 +34,15 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => (
+    (storyFn) => (
       <React.StrictMode>
         <StyledEngineProvider injectFirst>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <BrowserRouter>{Story()}</BrowserRouter>
+            <BrowserRouter>
+              <ToastProvider>
+                <_Story storyFn={storyFn} />
+              </ToastProvider>
+            </BrowserRouter>
           </LocalizationProvider>
         </StyledEngineProvider>
       </React.StrictMode>

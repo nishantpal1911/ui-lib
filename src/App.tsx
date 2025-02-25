@@ -1,14 +1,13 @@
-import { useState } from 'react';
-
 import 'src/App.css';
 import reactLogo from 'src/assets/react.svg';
 
 import viteLogo from '/vite.svg';
 
 import { Button } from 'src/components/ui';
+import { useToast } from 'src/hooks';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const toast = useToast();
 
   return (
     <>
@@ -22,7 +21,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className='card'>
-        <Button text={`count is ${count}`} outlined onClick={() => setCount((count) => count + 1)} />
+        <Button text={`Add Toast`} outlined onClick={() => toast.add({ message: 'We toastin!' })} />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

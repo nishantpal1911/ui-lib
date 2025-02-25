@@ -8,11 +8,12 @@ export enum ToastType {
 export interface ToastOptions {
   message: string;
   type?: ToastType;
+  className?: string;
 }
 
 export interface Toast extends ToastOptions {
   id: string;
-  timeout: NodeJS.Timeout;
+  timeout: NodeJS.Timeout | null;
   playedAt: number;
   remainingTime: number;
   pausedAt?: number | null;
