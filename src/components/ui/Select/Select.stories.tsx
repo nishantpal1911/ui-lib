@@ -58,7 +58,7 @@ const meta: Meta<typeof Select> = {
     type: {
       type: 'string',
       control: 'select',
-      options: ['item', 'checkbox', 'link', 'range'],
+      options: ['item', 'checkbox', 'link'],
       table: { category: 'type', defaultValue: { summary: 'select' } },
     },
     ...disabledArgs.reduce((acc, key) => ({ ...acc, [key]: { table: { disable: true } } }), {}),

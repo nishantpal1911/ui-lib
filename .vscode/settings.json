@@ -1,0 +1,24 @@
+{
+  "files.eol": "\n",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggest.showWords": false,
+  "editor.suggest.localityBonus": true,
+  "editor.suggestSelection": "recentlyUsed",
+  "tailwindCSS.experimental.classRegex": [
+    ["tailwindCVA\\(\\s*([^)]*)\\s*\\)", "[\"'`]([^\"'`]*)[\"'`]"],
+    ["cva\\(\\s*([^)]*)\\s*\\)", "[\"'`]([^\"'`]*)[\"'`]"],
+    ["cx\\(\\s*([^)]*)\\s*\\)", "[\"'`]([^\"'`]*)[\"'`]"],
+    ["(?:^|\\s)[cC]lass(?:=|:)\\s*[\"'`]([^\"'`]*)[\"'`]"],
+    ["(?:^|\\s)[cC]lass[Nn]ame(?:=|:)\\s*[\"'`]([^\"'`]*)[\"'`]"],
+    ["(?:const|let|var)\\s+\\w*(?:class|Class|styles|Styles)\\w*\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]"],
+    // Matches: function returning twMerge or class strings
+    ["twMerge\\(\\s*[\"'`](.*?)[\"'`]"]
+  ]
+}

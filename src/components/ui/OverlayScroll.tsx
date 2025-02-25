@@ -5,13 +5,14 @@ import { CSSProperties, PropsWithChildren, useRef } from 'react';
 interface Props {
   styles?: CSSProperties;
   options?: PartialOptions;
+  className?: string;
 }
 
 export default function OverlayScroll(props: PropsWithChildren<Props>) {
   const osInstanceRef = useRef<OverlayScrollbars | null>(null);
 
   const handleScroll = () => {
-    window.dispatchEvent(new Event('overlay-scroll'));
+    window.dispatchEvent(new Event('scroll'));
   };
 
   return (
@@ -28,6 +29,7 @@ export default function OverlayScroll(props: PropsWithChildren<Props>) {
       }}
       events={{ scroll: handleScroll }}
       style={props.styles}
+      className={props.className}
     >
       {props.children}
     </OverlayScrollbarsComponent>

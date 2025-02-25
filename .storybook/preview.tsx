@@ -1,4 +1,6 @@
 import { StyledEngineProvider } from '@mui/material/styles';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { Controls, Description, Primary, Subtitle, Title } from '@storybook/blocks';
 import { Preview } from '@storybook/react';
 import React from 'react';
@@ -30,7 +32,9 @@ const preview: Preview = {
     (Story) => (
       <React.StrictMode>
         <StyledEngineProvider injectFirst>
-          <BrowserRouter>{Story()}</BrowserRouter>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <BrowserRouter>{Story()}</BrowserRouter>
+          </LocalizationProvider>
         </StyledEngineProvider>
       </React.StrictMode>
     ),

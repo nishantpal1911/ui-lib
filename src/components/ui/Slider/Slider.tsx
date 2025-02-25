@@ -1,21 +1,21 @@
-import Slider, { SliderProps } from '@mui/material/Slider';
+import MaterialSlider, { SliderProps } from '@mui/material/Slider';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-import Checkbox from 'src/components/ui/Checkbox/Checkbox';
-// import { dropdownItemDefaultClasses } from 'src/components/ui/Dropdown';
+import { Checkbox } from 'src/components/ui';
 
 interface Props extends Omit<SliderProps, 'onChange' | 'onChangeCommitted' | 'value'> {
   value?: number[];
   label?: string;
   showMarksLabel?: boolean;
   marksLabelGranularity?: number;
-  // addSuffixToMaxMark?: boolean;
+  showUpperLimitToggle?: boolean;
+  addSuffixToMaxMark?: boolean;
   minimumDistance?: number;
   onChange?: (value: number[]) => void;
 }
 
-const styles = (className?: string) => className;
-//   dropdownItemDefaultClasses({ showBgOnHover: false, className: `px-6 ${className || ''}` });
+const styles = (className?: string) => twMerge('min-w-40', className);
 
 const getCorrectedGranularity = (labelGranularity: number) => {
   if (labelGranularity > 1) return 1;
@@ -25,26 +25,29 @@ const getCorrectedGranularity = (labelGranularity: number) => {
   return labelGranularity;
 };
 
-export default function DropdownItemRange({
-  // addSuffixToMaxMark = true,
+export default function Slider({
+  addSuffixToMaxMark = true,
   className,
   label,
   marks,
   marksLabelGranularity = 1,
   max = 100,
   min = 0,
-  minimumDistance,
+  minimumDistance = 0,
   onChange,
   showMarksLabel = true,
+  showUpperLimitToggle = false,
   step,
-  value = [0],
+  value,
   ...restProps
 }: Props) {
-  const [internalValue, setInternalValue] = useState(() => (value.length ? value : [0]));
-  const [hasUpperLimit, setHasUpperLimit] = useState(value.length === 2);
+  const [internalValue, setInternalValue] = useState(() => (value?.length ? value : [0]));
+  const [hasUpperLimit, setHasUpperLimit] = useState(value?.length === 2);
   const labelGranularity = useMemo(() => getCorrectedGranularity(marksLabelGranularity), [marksLabelGranularity]);
 
   useEffect(() => {
+    if (!value?.length) return;
+
     setInternalValue(value);
     setHasUpperLimit(value.length === 2);
   }, [value]);
@@ -71,12 +74,13 @@ export default function DropdownItemRange({
 
   const getFullMarks = useCallback(() => {
     const minMark = { value: min, label: `${min}` };
-    const maxMark = { value: max, label: `${max}${hasUpperLimit ? '' : '+'}` };
-    if (!step) return [minMark, maxMark];
+    const maxMark = { value: max, label: `${max}${!hasUpperLimit && addSuffixToMaxMark ? '+' : ''}` };
+    if (!step || (max - min) / step > 10) return [minMark, maxMark];
 
     const marks = [minMark];
+    const stepSize = Number((step / labelGranularity).toFixed(1));
+
     for (let i = 1; ; i++) {
-      const stepSize = step / labelGranularity;
       const markToAdd = min + stepSize * i;
 
       if (markToAdd >= max || markToAdd + stepSize > max) break;
@@ -85,22 +89,24 @@ export default function DropdownItemRange({
     }
 
     return [...marks, maxMark];
-  }, [hasUpperLimit, labelGranularity, max, min, step]);
+  }, [addSuffixToMaxMark, hasUpperLimit, labelGranularity, max, min, step]);
 
   return (
     <div className={styles(className)}>
-      <div className='mb-3 grid grid-flow-col'>
-        {label && <span className='text-sm'>{label}</span>}
-        <Checkbox
-          className='justify-self-end'
-          size='sm'
-          label='Upper limit'
-          labelPlacement='left'
-          checked={hasUpperLimit}
-          onChange={() => handleUpperLimitToggle()}
-        />
+      <div className='mb-3 grid grid-flow-col gap-2'>
+        {label && <span className='text-sm font-bold'>{label}</span>}
+        {showUpperLimitToggle && (
+          <Checkbox
+            className='justify-self-end font-medium'
+            size='xs'
+            label='Upper limit'
+            labelPlacement='left'
+            checked={hasUpperLimit}
+            onChange={handleUpperLimitToggle}
+          />
+        )}
       </div>
-      <Slider
+      <MaterialSlider
         size='small'
         className='align-middle'
         valueLabelDisplay='auto'
@@ -108,6 +114,7 @@ export default function DropdownItemRange({
         track={hasUpperLimit ? 'normal' : 'inverted'}
         onChange={(_event, updatedValue) => handleValueChange(updatedValue)}
         onChangeCommitted={() => commitChange(internalValue)}
+        min={min}
         max={max}
         step={step}
         marks={marks || (showMarksLabel && getFullMarks())}

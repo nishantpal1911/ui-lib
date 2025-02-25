@@ -1,6 +1,7 @@
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
+import { cva } from 'class-variance-authority';
 import React, { JSX, PropsWithChildren, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -24,6 +25,18 @@ interface Props {
   size?: ButtonSize;
 }
 
+const labelStyles = cva('mb-2 font-bold', {
+  variants: {
+    size: {
+      xs: 'text-xs',
+      sm: 'text-sm',
+      md: 'text-base',
+      lg: 'text-base',
+      xl: 'text-lg',
+    },
+  },
+});
+
 const styles = tailwindCVA('w-full justify-between font-medium text-black');
 
 const generateId = () => `Select__${uuidv4()}`;
@@ -37,7 +50,7 @@ export default function Select(props: PropsWithChildren<Props>) {
   return (
     <div className={`flex min-w-fit flex-col ${props.containerClass || ''}`}>
       {trimmedLabel && (
-        <label className='pointer-events-none mb-2 inline-block font-bold' htmlFor={idRef.current}>
+        <label className={labelStyles({ size: props.size })} htmlFor={idRef.current}>
           {trimmedLabel}
         </label>
       )}

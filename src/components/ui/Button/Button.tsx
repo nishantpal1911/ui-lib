@@ -28,32 +28,30 @@ interface Props
     ButtonProps {}
 
 const buttonStyles = tailwindCVA(
-  `relative cursor-pointer rounded-md transition-colors select-none focus:outline-offset-2`,
+  `relative cursor-pointer gap-1 rounded-md transition-colors select-none focus:outline-offset-2`,
   {
     variants: {
+      size: {
+        xs: 'px-2 py-1 text-xs',
+        sm: 'px-2.5 py-1 text-sm',
+        md: 'p-3 py-1.5 ',
+        lg: 'px-4 py-2 gap-1.5',
+        xl: 'px-4 py-2 text-lg gap-1.5',
+      },
       intent: {
         primary: 'bg-primary hover:bg-primary/90 text-white shadow-sm',
         secondary: 'bg-secondary hover:bg-secondary/90 text-white shadow-sm',
         tertiary: 'text-gray-600 hover:bg-gray-200 hover:text-black',
         danger: 'bg-danger hover:bg-danger/90 text-white shadow-sm',
         success: 'bg-success hover:bg-success/90 text-white',
-        unstyled: 'has-[*]:border-0 has-[*]:p-0 hover:has-[*]:inset-ring-0',
+        unstyled: 'border-0 p-0 inset-ring-0',
       },
-      outlined: {
-        true: 'border bg-transparent shadow-none hover:bg-transparent hover:inset-ring',
-      },
+      outlined: { true: '' },
       rounded: {
         true: 'rounded-full',
       },
-      size: {
-        xs: 'px-2 py-1 text-xs',
-        sm: 'px-2.5 py-1 text-sm',
-        md: 'p-3 py-1.5',
-        lg: 'px-4 py-2',
-        xl: 'px-4 py-2 text-lg',
-      },
       icon: {
-        true: 'flex items-center gap-1',
+        true: 'flex items-center',
       },
       iconPlacement: {
         left: '',
@@ -94,6 +92,11 @@ const buttonStyles = tailwindCVA(
         outlined: true,
         intent: 'success',
         className: 'border-success text-success',
+      },
+      {
+        intent: ['primary', 'secondary', 'tertiary', 'success', 'danger'],
+        outlined: true,
+        className: 'border bg-transparent shadow-none hover:bg-transparent hover:inset-ring',
       },
       {
         intent: 'unstyled',

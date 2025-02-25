@@ -1,12 +1,14 @@
 import Collapse from '@mui/material/Collapse';
 import { cva, VariantProps } from 'class-variance-authority';
 import 'overlayscrollbars/styles/overlayscrollbars.css';
-import React, { Children, CSSProperties, PropsWithChildren, useEffect, useRef, useState } from 'react';
+import React, { Children, CSSProperties, PropsWithChildren, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { twMerge } from 'tailwind-merge';
 
 import { ButtonSize } from 'src/components/ui';
 import OverlayScroll from 'src/components/ui/OverlayScroll';
+import { useOutlet } from 'src/hooks';
 
 interface Props extends VariantProps<typeof containerStyles> {
   className?: string;
@@ -36,7 +38,7 @@ const containerStyles = cva('relative z-10 flex h-0', {
   },
 });
 
-const OUTLET_ID = 'dropdown-outlet';
+const dropdownStyles = (className?: string) => twMerge('flex min-w-max flex-col py-2', className);
 
 export default function Dropdown({
   collapseOnSelect = true,
@@ -44,28 +46,19 @@ export default function Dropdown({
   passInternalProp = true,
   ...props
 }: PropsWithChildren<Props>) {
+  const dropdownOutlet = useOutlet('DROPDOWN');
   const containerRef = useRef<HTMLDivElement>(null);
-  const [dropdownOutlet, setDropdownOutlet] = useState(() => document.getElementById(OUTLET_ID));
 
   useEffect(() => {
-    // Create & attach dropdown outlet div if it doesn't exist.
-    const [body] = document.getElementsByTagName('body');
-    if (!dropdownOutlet) {
-      const div = document.createElement('div');
-      div.id = OUTLET_ID;
-      body.appendChild(div);
-      setDropdownOutlet(div);
-    }
-
     const handleScroll = () => {
       props.closeMenu?.();
     };
 
     // Listen to custom scroll event
-    window.addEventListener('overlay-scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('overlay-scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -114,7 +107,7 @@ export default function Dropdown({
             <OutsideClickHandler onOutsideClick={onOutsideClick} disabled={!props.isOpen}>
               <OverlayScroll>
                 {props.children && (
-                  <div className={`flex flex-col py-2 ${props.className || ''}`}>
+                  <div className={dropdownStyles(props.className)}>
                     {Children.map(props.children, (child, index) =>
                       React.isValidElement(child) ? React.cloneElement(child, { key: index, ...childProps }) : child
                     )}
