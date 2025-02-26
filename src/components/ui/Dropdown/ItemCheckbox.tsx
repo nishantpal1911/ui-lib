@@ -1,6 +1,7 @@
 import { cva } from 'class-variance-authority';
 
-import { ButtonSize, Checkbox } from 'src/components/ui';
+import { Checkbox } from 'src/components/ui';
+import type { ButtonSize } from 'src/components/ui/Button';
 import { dropdownItemDefaultClasses } from 'src/components/ui/Dropdown/Item';
 
 interface Props {
@@ -51,3 +52,5 @@ export default function DropdownItemCheckbox(props: Props) {
     />
   );
 }
+
+export type { Props as DropdownItemCheckboxProps };

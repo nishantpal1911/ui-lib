@@ -123,3 +123,5 @@ export default function Switch(props: Props) {
     </div>
   );
 }
+
+export type { Props as SwitchProps };

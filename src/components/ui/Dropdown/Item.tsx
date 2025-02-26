@@ -1,18 +1,8 @@
 import { cva, cx } from 'class-variance-authority';
 
-import { Button, ButtonSize } from 'src/components/ui';
-
-interface TextWithoutChildren {
-  text: string;
-  children?: never;
-}
-
-interface ChildrenWithoutText {
-  text?: never;
-  children: React.ReactNode;
-}
-
-export type TextOrChildren = TextWithoutChildren | ChildrenWithoutText;
+import { Button } from 'src/components/ui';
+import type { ButtonSize } from 'src/components/ui/Button';
+import { TextOrChildren } from 'src/types';
 
 type Props = TextOrChildren & {
   className?: string;
@@ -72,3 +62,5 @@ export default function DropdownItem(props: Props) {
     </Button>
   );
 }
+
+export type { Props as DropdownItemProps };

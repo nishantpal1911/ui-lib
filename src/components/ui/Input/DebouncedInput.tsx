@@ -1,18 +1,20 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
 
-import { TextInput, TextInputProps } from 'src/components/ui';
+import { InputOptions, TextInput, TextInputPropsExt } from 'src/components/ui';
 
-interface DebouncedInputOptions extends Omit<TextInputProps, 'onChange'> {
+interface DebouncedInputOptions extends InputOptions {
   debounceMS?: number;
   onChange?: (value: string) => void;
 }
+
+interface DebouncedInputProps extends Omit<TextInputPropsExt, 'onChange'>, DebouncedInputOptions {}
 
 export default function DebouncedInput({
   debounceMS = 500,
   onChange,
   value: initialValue = '',
   ...restProps
-}: PropsWithChildren<DebouncedInputOptions>) {
+}: PropsWithChildren<DebouncedInputProps>) {
   const [value, setValue] = useState(initialValue as string);
 
   useEffect(() => {
@@ -29,3 +31,5 @@ export default function DebouncedInput({
 
   return <TextInput value={value} onChange={setValue} {...restProps} />;
 }
+
+export type { DebouncedInputOptions, DebouncedInputProps };

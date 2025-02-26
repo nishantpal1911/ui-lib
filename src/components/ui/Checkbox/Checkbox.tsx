@@ -4,11 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { tailwindCVA } from 'src/utils/cva';
 
-export interface CheckboxProps extends Omit<ComponentProps<'input'>, 'size'>, VariantProps<typeof labelStyles> {
+interface CheckboxOptions extends VariantProps<typeof labelStyles> {
   indeterminate?: boolean;
   label?: string;
   disabled?: boolean;
 }
+
+interface Props extends Omit<ComponentProps<'input'>, 'size'>, CheckboxOptions {}
 
 const labelStyles = tailwindCVA('flex w-fit cursor-pointer items-center select-none', {
   variants: {
@@ -50,7 +52,7 @@ const checkboxStyles = tailwindCVA('enabled:cursor-pointer', {
 
 const generateId = () => `Checkbox__${uuidv4()}`;
 
-export default function Checkbox(props: CheckboxProps) {
+export default function Checkbox(props: Props) {
   const { className, disabled, indeterminate, label, labelPlacement, size, ...restProps } = props;
   const idRef = useRef(props.id || (label ? generateId() : undefined));
   const inputRef = useRef<HTMLInputElement>(null);
@@ -79,3 +81,5 @@ export default function Checkbox(props: CheckboxProps) {
       </label>
     : Input;
 }
+
+export type { CheckboxOptions, Props as CheckboxPropsExt };

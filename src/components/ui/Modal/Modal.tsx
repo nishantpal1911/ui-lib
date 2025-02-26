@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import { Button, OverlayScroll } from 'src/components/ui';
 import { useOutlet } from 'src/hooks';
 
-export interface ModalProps {
+interface ModalProps {
   isOpen: boolean;
   header?: string;
   className?: string;
@@ -59,3 +59,5 @@ export default function Modal(props: PropsWithChildren<ModalProps>) {
     )
   );
 }
+
+export type { ModalProps };

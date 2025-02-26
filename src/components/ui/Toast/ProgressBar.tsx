@@ -52,3 +52,4 @@ const ProgressBar = memo(function ProgressBar({ toast }: Props) {
 });
 
 export default ProgressBar;
+export type { Props as ProgressBarProps };

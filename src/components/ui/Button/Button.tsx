@@ -5,9 +5,8 @@ import React, { ComponentProps } from 'react';
 import { LoadingSpinner } from 'src/components/ui';
 import { tailwindCVA } from 'src/utils/cva';
 
+type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-
-export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 interface IconProps {
   svg: typeof SvgIcon;
@@ -16,16 +15,13 @@ interface IconProps {
   styles?: SvgIconProps;
 }
 
-interface ButtonProps {
+interface ButtonOptions extends Omit<VariantProps<typeof buttonStyles>, 'disabled' | 'icon' | 'iconPlacement'> {
   text?: string;
   icon?: IconProps;
   loading?: boolean;
 }
 
-interface Props
-  extends ComponentProps<'button'>,
-    Omit<VariantProps<typeof buttonStyles>, 'disabled' | 'icon' | 'iconPlacement'>,
-    ButtonProps {}
+interface Props extends ComponentProps<'button'>, ButtonOptions {}
 
 const buttonStyles = tailwindCVA(
   `relative cursor-pointer gap-1 rounded-md transition-colors select-none focus:outline-offset-2`,
@@ -177,4 +173,10 @@ export default function Button({
   );
 }
 
-export type { IconProps as ButtonIconProps };
+export type {
+  ButtonSize,
+  ButtonOptions,
+  Props as ButtonPropsExt,
+  IconProps as ButtonIconProps,
+  IconSize as ButtonIconSize,
+};

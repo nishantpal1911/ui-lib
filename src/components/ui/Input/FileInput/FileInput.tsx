@@ -1,9 +1,10 @@
 import { cx } from 'class-variance-authority';
-import { ChangeEvent, ComponentProps, useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 
 import { Button, InlineFeedback } from 'src/components/ui';
+import { ButtonOptions, ButtonPropsExt } from 'src/components/ui/Button';
 
-interface Props extends Omit<ComponentProps<typeof Button>, 'onError' | 'onClick'> {
+interface FileInputOptions extends ButtonOptions {
   onFileChange: (file: File) => void;
   hideSelectedFile?: boolean;
   hideError?: boolean;
@@ -11,6 +12,8 @@ interface Props extends Omit<ComponentProps<typeof Button>, 'onError' | 'onClick
   fileType?: 'text/csv' | 'application/pdf';
   containerClass?: string;
 }
+
+interface Props extends FileInputOptions, Omit<ButtonPropsExt, 'onError' | 'onClick'> {}
 
 export default function FileInput({
   containerClass,
@@ -67,3 +70,5 @@ export default function FileInput({
     </div>
   );
 }
+
+export type { FileInputOptions, Props as FileInputPropsExt };

@@ -5,7 +5,8 @@ import { cva } from 'class-variance-authority';
 import React, { JSX, PropsWithChildren, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Button, ButtonSize } from 'src/components/ui';
+import { Button } from 'src/components/ui';
+import type { ButtonSize } from 'src/components/ui/Button';
 import { tailwindCVA } from 'src/utils/cva';
 
 interface Props {
@@ -87,3 +88,5 @@ export default function Select(props: PropsWithChildren<Props>) {
     </div>
   );
 }
+
+export type { Props as SelectProps };

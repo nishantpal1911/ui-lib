@@ -3,7 +3,8 @@ import { DateCalendar, DateCalendarProps } from '@mui/x-date-pickers';
 import { PickerSelectionState } from '@mui/x-date-pickers/internals';
 import { formatDate } from 'date-fns';
 
-import { Button, ButtonSize, Dropdown, Select } from 'src/components/ui';
+import { Button, Dropdown, Select } from 'src/components/ui';
+import { ButtonSize } from 'src/components/ui/Button';
 
 interface Props extends Omit<DateCalendarProps<Date>, 'minDate' | 'maxDate'> {
   className?: string;
@@ -58,3 +59,5 @@ export default function DatePicker({
     </Select>
   );
 }
+
+export type { Props as DatePickerProps };

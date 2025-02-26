@@ -124,3 +124,5 @@ export default function Slider({
     </div>
   );
 }
+
+export type { Props as SliderProps };

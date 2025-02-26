@@ -1,7 +1,7 @@
 import { ComponentProps, PropsWithChildren, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { inputContainerStyles, inputStyles } from 'src/components/ui/Input';
+import { inputContainerStyles, inputStyles } from 'src/components/ui/Input/constants';
 import { isAlphaNumeric, isInteger } from 'src/utils/validation';
 
 type InputType = 'text' | 'integer' | 'alphanum' | 'password';
@@ -16,8 +16,6 @@ interface InputOptions {
 }
 
 interface Props extends Omit<ComponentProps<'input'>, 'type' | 'onChange' | 'size'>, InputOptions {}
-
-export type { Props as TextInputProps };
 
 const generateId = () => `TextInput__${uuidv4()}`;
 
@@ -75,3 +73,5 @@ export default function TextInput(props: PropsWithChildren<Props>) {
     </div>
   );
 }
+
+export type { Props as TextInputPropsExt, InputType, InputOptions };

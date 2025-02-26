@@ -35,3 +35,5 @@ export default function OverlayScroll(props: PropsWithChildren<Props>) {
     </OverlayScrollbarsComponent>
   );
 }
+
+export type { Props as OverlayScrollProps };

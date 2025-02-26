@@ -5,7 +5,7 @@ import { formatSeconds } from 'src/utils/date';
 interface Props {
   startSeconds: number;
   hideOnTimeout?: boolean;
-  onTimeout: () => void;
+  onTimeout?: () => void;
 }
 
 export default function Timer({ hideOnTimeout, onTimeout, startSeconds }: Props) {
@@ -24,7 +24,7 @@ export default function Timer({ hideOnTimeout, onTimeout, startSeconds }: Props)
     // Clear the interval after props.startSeconds and execute onTimeout method
     const timeout = setTimeout(() => {
       clearInterval(interval);
-      onTimeout();
+      onTimeout?.();
     }, startSeconds * 1000);
 
     // Cleanup function to clear interval and timeout if component unmounts
@@ -38,3 +38,5 @@ export default function Timer({ hideOnTimeout, onTimeout, startSeconds }: Props)
     (!hideOnTimeout || remainingSeconds > 0) && <span className='select-none'>{formatSeconds(remainingSeconds)}</span>
   );
 }
+
+export type { Props as TimerProps };

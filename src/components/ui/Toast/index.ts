@@ -1,2 +1,5 @@
-export { default as ProgressBar } from 'src/components/ui/Toast/ProgressBar';
-export { default as Toast } from 'src/components/ui/Toast/Toast';
+import ProgressBar, { ProgressBarProps } from 'src/components/ui/Toast/ProgressBar';
+import ToastComponent, { ToastProps } from 'src/components/ui/Toast/Toast';
+
+export { ProgressBar, ToastComponent };
+export type { ProgressBarProps, ToastProps };

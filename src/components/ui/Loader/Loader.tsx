@@ -24,6 +24,7 @@ const styles = cva(`${css.spin} z-[9999] inline-block rounded-full border-slate-
   },
 });
 
+// TODO: Use `useOutlet`
 export function PageLoader() {
   return ReactDOM.createPortal(
     <div className='bg-opacity-80 fixed top-0 left-0 z-[9999] min-h-lvh w-full bg-gray-300 p-4 backdrop-blur-xs'>
@@ -47,3 +48,5 @@ export function ContainerLoader() {
 export function LoadingSpinner({ className, size }: Props) {
   return <div className={styles({ className, size })}></div>;
 }
+
+export type { Props as LoadingSpinnerProps };

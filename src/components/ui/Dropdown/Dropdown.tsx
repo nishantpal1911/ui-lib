@@ -6,7 +6,8 @@ import ReactDOM from 'react-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { twMerge } from 'tailwind-merge';
 
-import { ButtonSize, OverlayScroll } from 'src/components/ui';
+import { OverlayScroll } from 'src/components/ui';
+import type { ButtonSize } from 'src/components/ui/Button';
 import { useOutlet } from 'src/hooks';
 
 interface Props extends VariantProps<typeof containerStyles> {
@@ -120,3 +121,5 @@ export default function Dropdown({
     </div>
   );
 }
+
+export type { Props as DropdownProps };

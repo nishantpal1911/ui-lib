@@ -1,21 +1,26 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { NavLink, NavLinkProps } from 'react-router-dom';
+import { NavLink, NavLinkProps, To } from 'react-router-dom';
 
-import { ButtonSize } from 'src/components/ui';
-import { dropdownItemDefaultClasses, TextOrChildren } from 'src/components/ui/Dropdown/Item';
+import type { ButtonSize } from 'src/components/ui/Button';
+import { dropdownItemDefaultClasses } from 'src/components/ui/Dropdown/Item';
+import { TextOrChildren } from 'src/types';
 import { tailwindCVA } from 'src/utils/cva';
 
-interface Props extends NavLinkProps {
-  to: string;
+type DropdownItemLinkOptions = {
+  to: To;
   value?: string;
   size?: ButtonSize;
   isExternal?: boolean;
   showActiveBg?: boolean;
-  /**
-   * For internal use by `Dropdown` component only
-   */
-  onSelectInternal?: (value?: string) => void;
-}
+} & TextOrChildren;
+
+type Props = DropdownItemLinkOptions &
+  NavLinkProps & {
+    /**
+     * For internal use by `Dropdown` component only
+     */
+    onSelectInternal?: (value?: string) => void;
+  };
 
 const styles = tailwindCVA(`${dropdownItemDefaultClasses} no-underline hover:bg-blue-50 flex items-center gap-2`, {
   variants: {
@@ -56,3 +61,5 @@ export default function DropdownItemLink({
     </NavLink>
   );
 }
+
+export type { DropdownItemLinkOptions, Props as DropdownItemLinkPropsExt };

@@ -1,9 +1,10 @@
 import { cva } from 'class-variance-authority';
 
-import { Button, ButtonSize } from 'src/components/ui';
+import { Button } from 'src/components/ui';
+import type { ButtonSize } from 'src/components/ui/Button';
 import { tailwindCVA } from 'src/utils/cva';
 
-export interface ButtonTabProps {
+interface ButtonTabProps {
   isActive?: boolean;
   text: string;
   disabled?: boolean;
@@ -83,3 +84,5 @@ export default function Tabs(props: Props) {
     </div>
   );
 }
+
+export type { ButtonTabProps, Props as TabsProps };

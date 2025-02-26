@@ -2,10 +2,10 @@ import { PropsWithChildren, useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Toast } from 'src/components/ui/Toast';
+import { ToastComponent } from 'src/components/ui/Toast';
 import { ToastContext } from 'src/context/Toast';
 import { useOutlet } from 'src/hooks';
-import { Toast as IToast, ToastOptions } from 'src/types/toast';
+import { Toast, ToastOptions } from 'src/types/toast';
 
 interface ToastProviderProps {
   timeoutInMS?: number;
@@ -26,7 +26,7 @@ export const ToastProvider = (props: PropsWithChildren<ToastProviderProps>) => {
         ReactDOM.createPortal(
           <div className='fixed right-6 bottom-6 z-[9999] flex flex-col gap-2'>
             {toasts.map((toast) => (
-              <Toast
+              <ToastComponent
                 key={toast.id}
                 toast={toast}
                 className={props.className}
@@ -44,7 +44,7 @@ export const ToastProvider = (props: PropsWithChildren<ToastProviderProps>) => {
 };
 
 const useToastManager = (timeoutInMS = DEFAULT_TOAST_TIMEOUT) => {
-  const [toasts, setToasts] = useState<IToast[]>([]);
+  const [toasts, setToasts] = useState<Toast[]>([]);
 
   const removeToast = useCallback((id: string) => {
     setToasts((currentToasts) => currentToasts.filter((toast) => toast.id !== id));
@@ -64,7 +64,7 @@ const useToastManager = (timeoutInMS = DEFAULT_TOAST_TIMEOUT) => {
     [removeToast, timeoutInMS]
   );
 
-  const pauseToast = useCallback((currentToast: IToast) => {
+  const pauseToast = useCallback((currentToast: Toast) => {
     if (!currentToast.timeout) return;
 
     const pausedAt = new Date().getTime();
@@ -82,7 +82,7 @@ const useToastManager = (timeoutInMS = DEFAULT_TOAST_TIMEOUT) => {
   }, []);
 
   const resumeToast = useCallback(
-    (currentToast: IToast) => {
+    (currentToast: Toast) => {
       if ([Infinity, 0].includes(currentToast.remainingTime)) return;
 
       const playedAt = new Date().getTime();

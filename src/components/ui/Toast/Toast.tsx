@@ -8,20 +8,19 @@ import { memo, useEffect, useState } from 'react';
 
 import { Button } from 'src/components/ui';
 import { ProgressBar } from 'src/components/ui/Toast';
-import css from 'src/styles/ui/Toast.module.css';
-import { Toast as IToast, ToastType } from 'src/types/toast';
+import { Toast, ToastType } from 'src/types/toast';
 import { tailwindCVA } from 'src/utils/cva';
 
 interface Props {
-  toast: IToast;
+  toast: Toast;
   className?: string;
-  onPauseToast: (toast: IToast) => void;
-  onResumeToast: (toast: IToast) => void;
+  onPauseToast?: (toast: Toast) => void;
+  onResumeToast?: (toast: Toast) => void;
   onRemoveToast: (id: string) => void;
 }
 
 const styles = tailwindCVA(
-  `${css.transition} relative h-fit w-96 rounded-md bg-white opacity-0 shadow-xl drop-shadow-md`,
+  `transition-opacity duration-300 ease-out relative h-fit w-96 rounded-md bg-white opacity-0 shadow-xl drop-shadow-md`,
   {
     variants: {
       isVisible: {
@@ -44,7 +43,7 @@ const ToastIcon = ({ type }: { type?: ToastType }) => {
   return <InfoOutlinedIcon className='text-blue-300' />;
 };
 
-const Toast = memo(function Toast(props: Props) {
+const ToastComponent = memo(function Toast(props: Props) {
   const [isVisible, setIsVisible] = useState(false);
 
   // TODO: Move to React Transitions
@@ -56,8 +55,8 @@ const Toast = memo(function Toast(props: Props) {
     <div
       key={props.toast.id}
       className={styles({ isVisible, className: cx(props.className, props.toast.className) })}
-      onMouseEnter={() => props.onPauseToast(props.toast)}
-      onMouseLeave={() => props.onResumeToast(props.toast)}
+      onMouseEnter={() => props.onPauseToast?.(props.toast)}
+      onMouseLeave={() => props.onResumeToast?.(props.toast)}
     >
       <div className='flex items-center gap-1 p-4 pr-1'>
         <ToastIcon type={props.toast.type} />
@@ -76,4 +75,5 @@ const Toast = memo(function Toast(props: Props) {
   );
 });
 
-export default Toast;
+export default ToastComponent;
+export type { Props as ToastProps };
