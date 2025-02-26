@@ -17,26 +17,23 @@ interface Props extends NavLinkProps {
   onSelectInternal?: (value?: string) => void;
 }
 
-const styles = tailwindCVA(
-  `${dropdownItemDefaultClasses} no-underline hover:bg-blue-50 block flex items-center gap-2`,
-  {
-    variants: {
-      size: {
-        xs: 'px-2 py-1 text-xs',
-        sm: 'px-2.5 py-1 text-sm',
-        md: 'p-3 py-1.5',
-        lg: 'px-4 py-2',
-        xl: 'px-4 py-2 text-lg',
-      },
-      isActive: {
-        true: 'bg-blue-50/20',
-      },
+const styles = tailwindCVA(`${dropdownItemDefaultClasses} no-underline hover:bg-blue-50 flex items-center gap-2`, {
+  variants: {
+    size: {
+      xs: 'px-2 py-1 text-xs',
+      sm: 'px-2.5 py-1 text-sm',
+      md: 'p-3 py-1.5',
+      lg: 'px-4 py-2',
+      xl: 'px-4 py-2 text-lg',
     },
-    defaultVariants: {
-      size: 'md',
+    isActive: {
+      true: 'bg-blue-50/20',
     },
-  }
-);
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
 
 export default function DropdownItemLink({
   children,

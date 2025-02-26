@@ -11,3 +11,5 @@ export const ToastContext = createContext<IToastContext>({
   add: () => '',
   dismiss: () => {},
 });
+
+export * from 'src/context/Toast/Provider';

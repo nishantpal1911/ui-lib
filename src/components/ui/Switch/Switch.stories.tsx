@@ -4,8 +4,6 @@ import { InputType } from 'storybook/internal/types';
 
 import { Switch } from 'src/components/ui';
 
-const SIZES = ['xs', 'sm', 'md', 'lg'];
-
 const disabledArgs = ['isToggled', 'onToggle'];
 
 const COLORS = ['primary', 'secondary', 'error', 'info', 'success', 'warning', 'default'];

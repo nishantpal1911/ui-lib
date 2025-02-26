@@ -1,5 +1,4 @@
-import type { Meta, StoryFn, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { LoadingSpinner } from 'src/components/ui';
 

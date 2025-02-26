@@ -1,6 +1,6 @@
 import { cva, cx } from 'class-variance-authority';
 
-import Button, { ButtonSize } from 'src/components/ui/Button/Button';
+import { Button, ButtonSize } from 'src/components/ui';
 
 interface TextWithoutChildren {
   text: string;

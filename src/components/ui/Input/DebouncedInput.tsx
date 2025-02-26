@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
 
-import { TextInput, TextInputProps } from 'src/components/ui/Input';
+import { TextInput, TextInputProps } from 'src/components/ui';
 
 interface DebouncedInputOptions extends Omit<TextInputProps, 'onChange'> {
   debounceMS?: number;

@@ -21,7 +21,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className='card'>
-        <Button text={`Add Toast`} outlined onClick={() => toast.add({ message: 'We toastin!' })} />
+        <Button text={`Toast`} outlined onClick={() => toast.add({ message: 'We toastin!' })} />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

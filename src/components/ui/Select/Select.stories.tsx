@@ -1,10 +1,10 @@
 import type { ArgTypes, Meta, StoryFn, StoryObj } from '@storybook/react';
 import { InputType } from 'storybook/internal/types';
 
+import { Select } from 'src/components/ui';
 import { CheckboxSelectExample } from 'src/components/ui/Select/_checkbox_select';
 import { ItemSelectExample } from 'src/components/ui/Select/_item_select';
 import { LinkSelectExample } from 'src/components/ui/Select/_link_select';
-import Select from 'src/components/ui/Select/Select';
 
 type ExtendedArgTypes<T> = Partial<ArgTypes<T>> & {
   optionsLength?: InputType;

@@ -6,8 +6,7 @@ import ReactDOM from 'react-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { twMerge } from 'tailwind-merge';
 
-import { ButtonSize } from 'src/components/ui';
-import OverlayScroll from 'src/components/ui/OverlayScroll';
+import { ButtonSize, OverlayScroll } from 'src/components/ui';
 import { useOutlet } from 'src/hooks';
 
 interface Props extends VariantProps<typeof containerStyles> {
