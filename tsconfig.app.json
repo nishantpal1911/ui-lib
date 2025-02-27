@@ -13,7 +13,6 @@
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": true,
     "jsx": "react-jsx",
 
     /* Absolute Imports */
@@ -29,12 +28,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
 
-    // "composite": true,
-    // "declaration": true,
-    // "declarationMap": true,
-    // "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist",
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "emitDeclarationOnly": true
   },
   "include": ["src"]
 }

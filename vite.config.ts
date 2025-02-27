@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react(), dts(), tailwindcss()],
   resolve: {
     alias: {
-      src: '/src',
+      src: path.resolve(__dirname, 'src'),
     },
   },
   build: {
@@ -19,8 +19,18 @@ export default defineConfig({
       formats: ['es', 'cjs'], // Ensure both ESM & CommonJS
       fileName: (format) => `ui-lib.${format}.js`,
     },
+    sourcemap: true,
     rollupOptions: {
-      external: ['react', 'react-dom'], // Keep these as peerDependencies
+      external: [
+        'react',
+        'react-dom',
+        'react-router-dom',
+        '@emotion/react',
+        '@emotion/styled',
+        '@mui/icons-material',
+        '@mui/material',
+        '@mui/x-date-pickers',
+      ],
       output: {
         globals: {
           react: 'React',

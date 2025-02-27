@@ -1,6 +1,6 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 
-import { resolve } from 'path';
+import path from 'path';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -15,11 +15,17 @@ const config: StorybookConfig = {
     options: {},
   },
   viteFinal: (config) => {
+    // Add path alias form absolute imports
     config.resolve = config.resolve || {};
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
-      src: resolve(__dirname, '../src'),
+      src: path.resolve(__dirname, '../src'),
     };
+
+    // Remove externalization for peer dependencies so they're bundled in Storybook
+    if (config.build && config.build.rollupOptions) {
+      config.build.rollupOptions.external = [];
+    }
 
     return config;
   },
