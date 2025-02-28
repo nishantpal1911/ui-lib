@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { OUTLET } from 'src/constants';
-import { ToastContext } from 'src/context/Toast';
+import { IToastContext, ToastContext } from 'src/context/Toast';
 
 export const useOutlet = (outletKey: keyof typeof OUTLET) => {
   const { id, zIndex } = OUTLET[outletKey];
@@ -25,4 +25,4 @@ export const useOutlet = (outletKey: keyof typeof OUTLET) => {
   return outletElement;
 };
 
-export const useToast = () => useContext(ToastContext);
+export const useToast = (): IToastContext => useContext(ToastContext);
