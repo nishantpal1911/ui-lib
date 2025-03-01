@@ -9,20 +9,20 @@
     "components"
   ],
   "type": "module",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
+  "main": "dist/ui-lib.cjs.js",
+  "module": "dist/ui-lib.es.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/your-repo.git"
+    "url": "git+https://github.com/nishantpal1911/ui-lib.git"
   },
   "scripts": {
     "dev": "vite",
     "prebuild": "rimraf dist",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "prepublishOnly": "npm run build",
     "lint": "eslint .",
     "preview": "vite preview",

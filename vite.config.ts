@@ -6,7 +6,14 @@ import dts from 'vite-plugin-dts';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react(), dts(), tailwindcss()],
+  plugins: [
+    react(),
+    dts({
+      outDir: 'dist/types',
+      insertTypesEntry: true,
+    }),
+    tailwindcss(),
+  ],
   resolve: {
     alias: {
       src: path.resolve(__dirname, 'src'),
