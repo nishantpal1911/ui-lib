@@ -1,6 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import ReactDOM from 'react-dom';
 
+import { useOutlet } from 'src/hooks';
 import css from 'src/styles/ui/Loader.module.css';
 
 interface Props extends VariantProps<typeof styles> {
@@ -24,13 +25,17 @@ const styles = cva(`${css.spin} z-[9999] inline-block rounded-full border-slate-
   },
 });
 
-// TODO: Use `useOutlet`
 export function PageLoader() {
-  return ReactDOM.createPortal(
-    <div className='bg-opacity-80 fixed top-0 left-0 z-[9999] min-h-lvh w-full bg-gray-300 p-4 backdrop-blur-xs'>
-      <LoadingSpinner size='2xl' className='fixed top-1/3 right-0 left-0 mx-auto' />
-    </div>,
-    document.getElementById('page-loader-outlet') as HTMLElement
+  const loaderOutlet = useOutlet('LOADER');
+
+  return (
+    loaderOutlet &&
+    ReactDOM.createPortal(
+      <div className='bg-opacity-80 fixed top-0 left-0 z-[9999] min-h-lvh w-full bg-gray-300 p-4 backdrop-blur-xs'>
+        <LoadingSpinner size='2xl' className='fixed top-1/3 right-0 left-0 mx-auto' />
+      </div>,
+      loaderOutlet
+    )
   );
 }
 

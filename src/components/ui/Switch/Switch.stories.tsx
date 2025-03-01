@@ -28,7 +28,11 @@ const meta: Meta<typeof Switch> = {
       name: 'label.placement',
       control: 'radio',
       options: ['left', 'right'],
-      table: { category: 'single-label' },
+      table: {
+        category: 'single-label',
+        type: { summary: 'left | right' },
+        defaultValue: { summary: 'left' },
+      },
     } as InputType,
     color: {
       control: 'select',
@@ -58,7 +62,8 @@ const meta: Meta<typeof Switch> = {
     } as InputType,
     ...disabledArgs.reduce((acc, key) => ({ ...acc, [key]: { table: { disable: true } } }), {}),
   },
-  args: {},
+  // @ts-expect-error asd
+  args: { labelText: 'Label', labelPlacement: 'left' },
 };
 
 const Template: StoryFn<typeof Switch> = ({
