@@ -4,6 +4,10 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filepath = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filepath);
 
 export default defineConfig({
   plugins: [

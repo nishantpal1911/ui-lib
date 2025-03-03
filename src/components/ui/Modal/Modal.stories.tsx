@@ -11,7 +11,6 @@ const meta: Meta<typeof Modal> = {
   args: {},
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Template: StoryFn<typeof Modal> = (_args) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -30,7 +30,7 @@ const buttonStyles = tailwindCVA(
       size: {
         xs: 'px-2 py-1 text-xs',
         sm: 'px-2.5 py-1 text-sm',
-        md: 'p-3 py-1.5 ',
+        md: 'p-3 py-1.5',
         lg: 'px-4 py-2 gap-1.5',
         xl: 'px-4 py-2 text-lg gap-1.5',
       },
