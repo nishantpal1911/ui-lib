@@ -1,17 +1,20 @@
+import * as React from 'react';
 import { ComponentProps, PropsWithChildren, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { inputContainerStyles, inputStyles } from 'src/components/ui/Input/constants';
+import { inputContainerStyles, inputStyles, labelStyles } from 'src/components/ui/Input/constants';
 import { isAlphaNumeric, isInteger } from 'src/utils/validation';
 
 type InputType = 'text' | 'integer' | 'alphanum' | 'password';
 
+type LabelWithClass = { text: string; className: string };
+
 interface InputOptions {
-  label?: string;
+  label?: LabelWithClass | string;
   type?: InputType;
   containerClass?: string;
   rounded?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   onChange?: (value: string, event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -53,15 +56,18 @@ export default function TextInput(props: PropsWithChildren<Props>) {
   };
 
   return (
-    <div className='flex flex-col'>
+    <div className={`flex flex-col ${containerClass}`}>
       {label && (
-        <label className='mb-2' htmlFor={idRef.current}>
-          {label}
+        <label
+          className={labelStyles({ size, className: (label as LabelWithClass).className })}
+          htmlFor={idRef.current}
+        >
+          {typeof label === 'string' ? label : label.text}
         </label>
       )}
-      <div className={inputContainerStyles({ className: containerClass, rounded, size })}>
+      <div className={inputContainerStyles({ className, rounded, size })}>
         <input
-          className={inputStyles({ disabled, className })}
+          className={inputStyles({ disabled })}
           id={idRef.current}
           disabled={disabled}
           type={type === 'password' ? type : 'text'}

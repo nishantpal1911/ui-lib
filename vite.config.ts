@@ -35,7 +35,7 @@ export default defineConfig({
       external: [
         'react',
         'react-dom',
-        'react-router-dom',
+        'react-router',
         '@emotion/react',
         '@emotion/styled',
         '@mui/icons-material',
@@ -46,6 +46,7 @@ export default defineConfig({
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          'react-router': 'ReactRouter',
         },
       },
     },

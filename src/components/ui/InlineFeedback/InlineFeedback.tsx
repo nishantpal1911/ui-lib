@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default function InlineFeedback(props: Props) {
-  return props.showFeedback && <span className={`text-danger ${props.className || ''}`}>{props.text}</span>;
+  return props.showFeedback && <p className={`text-danger ${props.className || ''}`}>{props.text}</p>;
 }
 
 export type { Props as InlineFeedbackProps };

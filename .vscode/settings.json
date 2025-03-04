@@ -11,6 +11,7 @@
   "editor.suggest.showWords": false,
   "editor.suggest.localityBonus": true,
   "editor.suggestSelection": "recentlyUsed",
+  "tailwindCSS.experimental.configFile": "src/styles/index.css",
   "tailwindCSS.experimental.classRegex": [
     ["tailwindCVA\\(\\s*([^)]*)\\s*\\)", "[\"'`]([^\"'`]*)[\"'`]"],
     ["cva\\(\\s*([^)]*)\\s*\\)", "[\"'`]([^\"'`]*)[\"'`]"],

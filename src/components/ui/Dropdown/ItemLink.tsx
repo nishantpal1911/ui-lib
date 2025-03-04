@@ -1,5 +1,5 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { NavLink, NavLinkProps, To } from 'react-router-dom';
+import { NavLink, NavLinkProps, To } from 'react-router';
 
 import type { ButtonSize } from 'src/components/ui/Button';
 import { dropdownItemDefaultClasses } from 'src/components/ui/Dropdown/Item';
