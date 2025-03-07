@@ -36,7 +36,7 @@ export const inputStyles = tailwindCVA('h-full w-full focus-visible:outline-hidd
   },
 });
 
-export const labelStyles = cva('mb-2 font-medium', {
+export const labelStyles = cva('mb-2 w-fit font-medium', {
   variants: {
     size: {
       xs: 'text-sm',

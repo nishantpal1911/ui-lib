@@ -21,6 +21,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "prebuild": "rimraf -g dist/* ui-lib-v*.tgz",
     "build": "vite build",
     "prepublishOnly": "npm run build",
     "lint": "eslint .",
@@ -86,6 +87,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.2.0",
+    "rimraf": "^6.0.1",
     "storybook": "8.5.7",
     "tailwindcss": "^4.0.6",
     "typescript": "~5.7.2",

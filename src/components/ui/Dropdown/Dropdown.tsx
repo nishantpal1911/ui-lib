@@ -16,7 +16,7 @@ interface Props extends VariantProps<typeof containerStyles> {
   showBgOnSelected?: boolean;
   collapseOnSelect?: boolean;
   eagerLoad?: boolean;
-  triggerRef?: React.RefObject<HTMLButtonElement>;
+  triggerRef?: React.RefObject<HTMLButtonElement | null>;
   closeMenu?: () => void;
   onSelect?: (value?: string) => void;
   passInternalProp?: boolean;
