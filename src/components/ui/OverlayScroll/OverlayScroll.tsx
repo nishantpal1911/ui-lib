@@ -1,4 +1,5 @@
 import { OverlayScrollbars, type PartialOptions } from 'overlayscrollbars';
+import 'overlayscrollbars/styles/overlayscrollbars.css';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import { CSSProperties, PropsWithChildren, useRef } from 'react';
 

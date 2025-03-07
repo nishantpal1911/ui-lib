@@ -1,6 +1,5 @@
 import Collapse from '@mui/material/Collapse';
 import { cva, VariantProps } from 'class-variance-authority';
-import 'overlayscrollbars/styles/overlayscrollbars.css';
 import React, { Children, CSSProperties, PropsWithChildren, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
