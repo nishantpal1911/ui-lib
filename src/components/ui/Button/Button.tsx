@@ -92,7 +92,7 @@ const buttonStyles = tailwindCVA(
       {
         intent: ['primary', 'secondary', 'tertiary', 'success', 'danger'],
         outlined: true,
-        className: 'border bg-transparent shadow-none hover:bg-transparent hover:inset-ring',
+        className: 'border bg-white shadow-none hover:bg-white hover:inset-ring',
       },
       {
         intent: 'unstyled',

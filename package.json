@@ -1,5 +1,5 @@
 {
-  "name": "ui-lib",
+  "name": "@nishantpal1911/ui-lib",
   "version": "1.0.0",
   "license": "MIT",
   "keywords": [
@@ -21,9 +21,10 @@
   },
   "scripts": {
     "dev": "vite",
-    "prebuild": "rimraf -g dist/* ui-lib-v*.tgz",
+    "prebuild": "rimraf dist",
     "build": "vite build",
-    "prepublishOnly": "npm run build",
+    "prepack": "rimraf -g ui-lib-v*.tgz && yarn build",
+    "prepublishOnly": "yarn pack",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
