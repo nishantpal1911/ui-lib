@@ -1,6 +1,5 @@
 import Collapse from '@mui/material/Collapse';
 import { cva, VariantProps } from 'class-variance-authority';
-import 'overlayscrollbars/styles/overlayscrollbars.css';
 import React, { Children, CSSProperties, PropsWithChildren, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
@@ -16,7 +15,7 @@ interface Props extends VariantProps<typeof containerStyles> {
   showBgOnSelected?: boolean;
   collapseOnSelect?: boolean;
   eagerLoad?: boolean;
-  triggerRef?: React.RefObject<HTMLButtonElement>;
+  triggerRef?: React.RefObject<HTMLButtonElement | null>;
   closeMenu?: () => void;
   onSelect?: (value?: string) => void;
   passInternalProp?: boolean;
@@ -83,7 +82,7 @@ export default function Dropdown({
       onSelectInternal: (value?: string) => {
         props.onSelect?.(value);
         if (collapseOnSelect) {
-          setTimeout(() => props.closeMenu?.(), 100);
+          props.closeMenu?.();
         }
       },
       size: props.size,
@@ -101,7 +100,7 @@ export default function Dropdown({
             in={props.isOpen}
             mountOnEnter={!eagerLoad}
             unmountOnExit={!eagerLoad}
-            timeout={{ enter: 150, exit: 100 }}
+            timeout={{ enter: 150, exit: 0 }}
             easing='ease-out'
           >
             <OutsideClickHandler onOutsideClick={onOutsideClick} disabled={!props.isOpen}>

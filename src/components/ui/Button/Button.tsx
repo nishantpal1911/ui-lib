@@ -37,7 +37,7 @@ const buttonStyles = tailwindCVA(
       intent: {
         primary: 'bg-primary hover:bg-primary/90 text-white shadow-sm',
         secondary: 'bg-secondary hover:bg-secondary/90 text-white shadow-sm',
-        tertiary: 'text-gray-600 hover:bg-gray-200 hover:text-black',
+        tertiary: 'text-gray-600 bg-white hover:bg-gray-200 hover:text-black',
         danger: 'bg-danger hover:bg-danger/90 text-white shadow-sm',
         success: 'bg-success hover:bg-success/90 text-white',
         unstyled: 'border-0 p-0 inset-ring-0',
@@ -92,7 +92,7 @@ const buttonStyles = tailwindCVA(
       {
         intent: ['primary', 'secondary', 'tertiary', 'success', 'danger'],
         outlined: true,
-        className: 'border bg-transparent shadow-none hover:bg-transparent hover:inset-ring',
+        className: 'border bg-white shadow-none hover:bg-white hover:inset-ring',
       },
       {
         intent: 'unstyled',

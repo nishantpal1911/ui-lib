@@ -1,26 +1,28 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { NavLink, NavLinkProps, To } from 'react-router-dom';
+import { JSX } from 'react';
 
 import type { ButtonSize } from 'src/components/ui/Button';
 import { dropdownItemDefaultClasses } from 'src/components/ui/Dropdown/Item';
-import { TextOrChildren } from 'src/types';
 import { tailwindCVA } from 'src/utils/cva';
 
+interface RenderArgs {
+  classNameFn: (isActive?: boolean) => string;
+  onClick: () => void;
+  ExternalIcon: JSX.Element;
+}
+
 type DropdownItemLinkOptions = {
-  to: To;
+  render: (args: RenderArgs) => JSX.Element;
   value?: string;
   size?: ButtonSize;
-  isExternal?: boolean;
-  showActiveBg?: boolean;
-} & TextOrChildren;
+};
 
-type Props = DropdownItemLinkOptions &
-  NavLinkProps & {
-    /**
-     * For internal use by `Dropdown` component only
-     */
-    onSelectInternal?: (value?: string) => void;
-  };
+type Props = DropdownItemLinkOptions & {
+  /**
+   * For internal use by `Dropdown` component only
+   */
+  onSelectInternal?: (value?: string) => void;
+};
 
 const styles = tailwindCVA(`${dropdownItemDefaultClasses} no-underline hover:bg-blue-50 flex items-center gap-2`, {
   variants: {
@@ -40,26 +42,12 @@ const styles = tailwindCVA(`${dropdownItemDefaultClasses} no-underline hover:bg-
   },
 });
 
-export default function DropdownItemLink({
-  children,
-  isExternal,
-  onSelectInternal,
-  showActiveBg = false,
-  size,
-  text,
-  to,
-  value,
-}: Props & TextOrChildren) {
-  return (
-    <NavLink
-      to={to}
-      onClick={() => onSelectInternal?.(value)}
-      className={({ isActive }) => styles({ size, isActive: showActiveBg && isActive })}
-    >
-      {text || children}
-      {isExternal && <OpenInNewIcon color='info' sx={{ height: '0.75rem', width: '0.75rem' }} />}
-    </NavLink>
-  );
+export default function DropdownItemLink({ onSelectInternal, render, size, value }: Props) {
+  return render({
+    classNameFn: (isActive?: boolean) => styles({ size, isActive }),
+    onClick: () => onSelectInternal?.(value),
+    ExternalIcon: <OpenInNewIcon color='info' sx={{ height: '0.75rem', width: '0.75rem' }} />,
+  });
 }
 
-export type { DropdownItemLinkOptions, Props as DropdownItemLinkPropsExt };
+export type { DropdownItemLinkOptions, Props as DropdownItemLinkPropsExt, RenderArgs as DropdownItemLinkRenderArgs };

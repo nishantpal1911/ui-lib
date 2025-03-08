@@ -35,7 +35,6 @@ export default defineConfig({
       external: [
         'react',
         'react-dom',
-        'react-router-dom',
         '@emotion/react',
         '@emotion/styled',
         '@mui/icons-material',

@@ -26,7 +26,7 @@ interface Props {
   size?: ButtonSize;
 }
 
-const labelStyles = cva('mb-2 font-bold', {
+const labelStyles = cva('mb-2 w-fit font-bold', {
   variants: {
     size: {
       xs: 'text-xs',

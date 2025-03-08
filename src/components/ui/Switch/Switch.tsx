@@ -32,7 +32,7 @@ type Props = TogglePropsOrLabel &
     onToggle?: (checked: boolean) => void;
   };
 
-const containerStyles = cva('toggle-switch cursor-pointer *:cursor-pointer', {
+const containerStyles = cva('__toggle-switch cursor-pointer *:cursor-pointer', {
   variants: {
     disabled: {
       true: 'text-gray-400 *:has-[*]:cursor-default',

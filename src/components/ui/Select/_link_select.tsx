@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { NavLink } from 'react-router';
 
 import { Dropdown, DropdownItemLink, Select } from 'src/components/ui';
 
@@ -12,7 +13,15 @@ export const LinkSelectExample = ({ collapseOnSelect, optionsLength, ...args }: 
     <Select {...args}>
       <Dropdown collapseOnSelect={collapseOnSelect}>
         {options.map((value, index) => (
-          <DropdownItemLink to='#' key={index} value={value} text={value} />
+          <DropdownItemLink
+            key={index}
+            value={value}
+            render={({ classNameFn, onClick }) => (
+              <NavLink to='#' className={({ isActive }) => classNameFn(isActive)} onClick={onClick}>
+                {value}
+              </NavLink>
+            )}
+          />
         ))}
       </Dropdown>
     </Select>

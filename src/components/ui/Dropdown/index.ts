@@ -5,6 +5,7 @@ import {
   default as DropdownItemLink,
   DropdownItemLinkOptions,
   DropdownItemLinkPropsExt,
+  DropdownItemLinkRenderArgs,
 } from 'src/components/ui/Dropdown/ItemLink';
 
 export { Dropdown, DropdownItem, DropdownItemLink, DropdownItemCheckbox };
@@ -13,5 +14,6 @@ export type {
   DropdownItemProps,
   DropdownItemLinkOptions,
   DropdownItemLinkPropsExt,
+  DropdownItemLinkRenderArgs,
   DropdownItemCheckboxProps,
 };
