@@ -1,7 +1,7 @@
 /* TODO: Removing this leads to error. Can this be fixed? */
 @reference '../index.css';
 
-.toggle-switch {
+.__toggle-switch {
   & .success,
   & span.success {
     @apply text-success;

@@ -82,7 +82,7 @@ export default function Dropdown({
       onSelectInternal: (value?: string) => {
         props.onSelect?.(value);
         if (collapseOnSelect) {
-          setTimeout(() => props.closeMenu?.(), 100);
+          props.closeMenu?.();
         }
       },
       size: props.size,
@@ -100,7 +100,7 @@ export default function Dropdown({
             in={props.isOpen}
             mountOnEnter={!eagerLoad}
             unmountOnExit={!eagerLoad}
-            timeout={{ enter: 150, exit: 100 }}
+            timeout={{ enter: 150, exit: 0 }}
             easing='ease-out'
           >
             <OutsideClickHandler onOutsideClick={onOutsideClick} disabled={!props.isOpen}>
