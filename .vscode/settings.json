@@ -21,5 +21,6 @@
     ["(?:const|let|var)\\s+\\w*(?:class|Class|styles|Styles)\\w*\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]"],
     // Matches: function returning twMerge or class strings
     ["twMerge\\(\\s*[\"'`](.*?)[\"'`]"]
-  ]
+  ],
+  "typescript.preferences.autoImportSpecifierExcludeRegexes": ["^@mui/[^/]+$"]
 }

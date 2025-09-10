@@ -5,24 +5,58 @@ import React, { ComponentProps } from 'react';
 import { LoadingSpinner } from 'src/components/ui';
 import { tailwindCVA } from 'src/utils/cva';
 
+/**
+ * Reusable Button component for the UI library.
+ * Supports sizes, intents, optional icons, outlined/rounded variants and a loading state.
+ * Styling is managed via tailwindCVA + variants.
+ */
+
+/** Supported button sizes */
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+/** Supported icon sizes (adds a larger '2xl' option) */
 type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
+/** Icon configuration accepted by the Button */
 interface IconProps {
+  /** The SvgIcon component to render (MUI SvgIcon) */
   svg: typeof SvgIcon;
+  /** Visual size for the icon; maps to CSS dimensions via iconSizeMap */
   size?: IconSize;
+  /** Placement of icon relative to label/content */
   placement?: 'left' | 'right';
+  /** Additional props passed to the SvgIcon component (className, sx, etc.) */
   styles?: SvgIconProps;
 }
 
+/**
+ * Public button options exposed to consumers.
+ * Omits some internal variant props from class-variance-authority.
+ */
 interface ButtonOptions extends Omit<VariantProps<typeof buttonStyles>, 'disabled' | 'icon' | 'iconPlacement'> {
+  /** Optional text label for the button. Prefer children for rich content. */
   text?: string;
+  /** Icon configuration; when provided the button will render the icon. */
   icon?: IconProps;
+  /** Show a centered loading spinner and disable interactions. */
   loading?: boolean;
 }
 
+/**
+ * Full props for the Button component.
+ * Includes native button attributes plus ButtonOptions.
+ *
+ * Notable props:
+ * - children: preferred for rich content
+ * - text: simple string label
+ * - icon: icon configuration
+ * - loading: disables and shows spinner
+ */
 interface Props extends ComponentProps<'button'>, ButtonOptions {}
 
+/**
+ * Variant-based Tailwind styles for the button. Keep changes to the visual system
+ * inside this definition so the component remains declarative.
+ */
 const buttonStyles = tailwindCVA(
   `relative cursor-pointer gap-1 rounded-md transition-colors select-none focus:outline-offset-2`,
   {
@@ -104,8 +138,10 @@ const buttonStyles = tailwindCVA(
   }
 );
 
+/** Returns 'invisible' to visually hide elements while preserving layout when loading */
 const invisibleStyle = (loading?: boolean) => (loading ? 'invisible' : '');
 
+/** Map of IconSize -> CSS length used for SvgIcon sizing */
 const iconSizeMap: Record<IconSize, string> = {
   xs: '1rem', // 16px
   sm: '1.125rem', // 18px
@@ -115,12 +151,17 @@ const iconSizeMap: Record<IconSize, string> = {
   '2xl': '2rem', // 32px
 };
 
+/** Resolve an IconSize to a CSS size string (or undefined) */
 const getIconSize = (size?: IconSize | null) => {
   if (!size) return;
 
   return iconSizeMap[size];
 };
 
+/**
+ * Button component.
+ * Renders an optional icon, label/children, and a centered loading spinner when loading.
+ */
 export default function Button({
   children,
   className,
@@ -152,6 +193,8 @@ export default function Button({
       })}
       type={type || 'button'}
       disabled={disabled || loading}
+      aria-disabled={disabled || loading}
+      aria-busy={loading}
       onClick={onClick}
       {...restProps}
     >
@@ -161,6 +204,8 @@ export default function Button({
         React.createElement(icon.svg, {
           ...icon.styles,
           ...(disabled && intent === 'unstyled' && { color: 'disabled' }),
+          // hide icon from AT when there's visible text to avoid redundancy
+          'aria-hidden': text || children ? true : undefined,
           className: invisibleStyle(loading),
           classes: { root: icon.styles?.className },
           sx: { height: iconSize, width: iconSize },

@@ -23,6 +23,13 @@ export default defineConfig({
       src: path.resolve(__dirname, 'src'),
     },
   },
+  // @ts-expect-error TS error
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: 'vitest.setup.ts',
+    include: ['src/**/*.test.{ts,tsx}', 'src/**/*.spec.{ts,tsx}', 'src/**/__tests__/**/*.{ts,tsx}'],
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
