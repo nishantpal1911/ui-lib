@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
 import { InputOptions, TextInput, TextInputPropsExt } from 'src/components/ui';
 
@@ -16,18 +16,23 @@ export default function DebouncedInput({
   ...restProps
 }: PropsWithChildren<DebouncedInputProps>) {
   const [value, setValue] = useState(initialValue as string);
+  const onChangeRef = useRef(onChange);
 
   useEffect(() => {
     setValue(initialValue as string);
   }, [initialValue]);
 
   useEffect(() => {
-    if (!onChange) return;
+    onChangeRef.current = onChange;
+  }, [onChange]);
 
-    const timeout = setTimeout(() => onChange(value), debounceMS);
+  useEffect(() => {
+    if (!onChangeRef.current) return;
+
+    const timeout = setTimeout(() => onChangeRef.current?.(value), debounceMS);
 
     return () => clearTimeout(timeout);
-  }, [debounceMS, onChange, value]);
+  }, [debounceMS, value]);
 
   return <TextInput value={value} onChange={setValue} {...restProps} />;
 }
