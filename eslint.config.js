@@ -77,6 +77,13 @@ export default tseslint.config(
       ],
       'sort-destructure-keys/sort-destructure-keys': 2,
       'no-relative-import-paths/no-relative-import-paths': 'error',
+      // Restrict deep imports from @mui packages, but allow the date-pickers package
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [{ regex: '^@mui/(?!x-date-pickers)[^/]+$' }],
+        },
+      ],
       'prettier/prettier': 'error',
     },
     settings: {
