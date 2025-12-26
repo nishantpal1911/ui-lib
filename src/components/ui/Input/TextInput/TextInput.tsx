@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ComponentProps, PropsWithChildren, useRef } from 'react';
+import { ComponentProps, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { inputContainerStyles, inputStyles, labelStyles } from 'src/components/ui/Input/constants';
@@ -22,15 +22,15 @@ interface Props extends Omit<ComponentProps<'input'>, 'type' | 'onChange' | 'siz
 
 const generateId = () => `TextInput__${uuidv4()}`;
 
-export default function TextInput(props: PropsWithChildren<Props>) {
+export default function TextInput(props: Props) {
   const {
-    children,
     className,
     containerClass = '',
     disabled,
     id: propsId,
     label,
     onChange,
+    required,
     rounded,
     size = 'md',
     type = 'text',
@@ -38,6 +38,7 @@ export default function TextInput(props: PropsWithChildren<Props>) {
   } = props;
 
   const idRef = useRef(propsId || (label ? generateId() : undefined));
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const isValueTypeValid = (value: string): boolean => {
     if (!value.length || type === 'text' || type === 'password') return true;
@@ -65,16 +66,24 @@ export default function TextInput(props: PropsWithChildren<Props>) {
           {typeof label === 'string' ? label : label.text}
         </label>
       )}
-      <div className={inputContainerStyles({ className, rounded, size })}>
+      <div
+        className={inputContainerStyles({
+          className,
+          rounded,
+          size,
+        })}
+      >
         <input
+          ref={inputRef}
           className={inputStyles({ disabled })}
           id={idRef.current}
           disabled={disabled}
           type={type === 'password' ? type : 'text'}
           onChange={handleValueChange}
+          required={required}
+          aria-required={required}
           {...restProps}
         />
-        {children}
       </div>
     </div>
   );

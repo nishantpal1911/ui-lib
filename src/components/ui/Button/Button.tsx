@@ -1,6 +1,6 @@
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 import { VariantProps } from 'class-variance-authority';
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, useEffect } from 'react';
 
 import { LoadingSpinner } from 'src/components/ui';
 import { tailwindCVA } from 'src/utils/cva';
@@ -58,7 +58,7 @@ interface Props extends ComponentProps<'button'>, ButtonOptions {}
  * inside this definition so the component remains declarative.
  */
 const buttonStyles = tailwindCVA(
-  `relative cursor-pointer gap-1 rounded-md transition-colors select-none focus:outline-offset-2`,
+  `relative cursor-pointer gap-1 rounded-md transition-colors select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-black`,
   {
     variants: {
       size: {
@@ -179,6 +179,25 @@ export default function Button({
 }: Props) {
   const iconSize = getIconSize(icon?.size || size);
 
+  // Warn in development if icon-only button lacks accessible name
+  useEffect(() => {
+    if (
+      import.meta.env.DEV &&
+      icon &&
+      !text &&
+      !children &&
+      !restProps['aria-label'] &&
+      !restProps['aria-labelledby']
+    ) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'Button: Icon-only buttons should have an aria-label or aria-labelledby for accessibility. ' +
+          'Screen reader users need to know what the button does.'
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <button
       className={buttonStyles({
@@ -193,7 +212,6 @@ export default function Button({
       })}
       type={type || 'button'}
       disabled={disabled || loading}
-      aria-disabled={disabled || loading}
       aria-busy={loading}
       onClick={onClick}
       {...restProps}

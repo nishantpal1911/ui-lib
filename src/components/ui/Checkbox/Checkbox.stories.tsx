@@ -17,7 +17,7 @@ const meta: Meta<typeof Checkbox> = {
       options: SIZES,
       type: 'string',
       table: {
-        defaultValue: { summary: 'md' },
+        defaultValue: { summary: 'sm' },
         type: { summary: SIZES.join(' | ') },
       },
     },

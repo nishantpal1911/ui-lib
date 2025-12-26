@@ -17,6 +17,10 @@ const meta: Meta<typeof TextInputComp> = {
       type: 'boolean',
       table: { defaultValue: { summary: 'false' } },
     },
+    placeholder: {
+      control: 'text',
+      type: 'string',
+    },
     // @ts-expect-error asd
     debounceMS: {
       type: 'number',
@@ -30,7 +34,7 @@ const meta: Meta<typeof TextInputComp> = {
 const Template: StoryFn<typeof TextInputComp> = ({ debounceMS, ...args }: any) => {
   const [value, setValue] = useState('');
 
-  const commonArgs = { value, onChange: setValue, ...args };
+  const commonArgs = { value, onChange: setValue, placeholder: 'Type something here...', ...args };
 
   return debounceMS ?
       <>

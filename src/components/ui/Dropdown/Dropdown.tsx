@@ -1,4 +1,4 @@
-import Collapse from '@mui/material/Collapse';
+import Collapse, { CollapseProps } from '@mui/material/Collapse';
 import { cva, VariantProps } from 'class-variance-authority';
 import React, { Children, CSSProperties, PropsWithChildren, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
@@ -11,10 +11,11 @@ import { useOutlet } from 'src/hooks';
 
 interface Props extends VariantProps<typeof containerStyles> {
   className?: string;
+  eagerLoad?: boolean;
+  transition?: CollapseProps | boolean;
   isOpen?: boolean;
   showBgOnSelected?: boolean;
   collapseOnSelect?: boolean;
-  eagerLoad?: boolean;
   triggerRef?: React.RefObject<HTMLButtonElement | null>;
   closeMenu?: () => void;
   onSelect?: (value?: string) => void;
@@ -39,10 +40,58 @@ const containerStyles = cva('relative z-10 flex h-0', {
 
 const dropdownStyles = (className?: string) => twMerge('flex min-w-max flex-col py-2', className);
 
+const portalRootStyles = cva('absolute rounded-lg bg-white shadow-xl', {
+  variants: {
+    isHidden: {
+      true: 'hidden',
+    },
+  },
+});
+
+const PortalRootElement = React.memo(function ({
+  children,
+  containerRef,
+  eagerLoad,
+  isOpen,
+  transition,
+}: PropsWithChildren<{
+  transition?: CollapseProps | boolean;
+  containerRef: React.RefObject<HTMLDivElement | null>;
+  isOpen?: boolean;
+  eagerLoad?: boolean;
+}>) {
+  const getSizeAndPositionStyles = (divElement: HTMLDivElement | null): CSSProperties => {
+    if (!divElement) return {};
+
+    const { width, x, y } = divElement.getBoundingClientRect();
+
+    return { top: y + 1, left: x, minWidth: width };
+  };
+
+  const commonProps = {
+    className: portalRootStyles({ isHidden: !transition && !isOpen }),
+    style: getSizeAndPositionStyles(containerRef.current),
+  };
+  const transitionProps = {
+    in: isOpen,
+    mountOnEnter: !eagerLoad,
+    unmountOnExit: !eagerLoad,
+    timeout: { enter: 150, exit: 0 },
+    easing: 'ease-out',
+    ...(typeof transition === 'object' && transition),
+  };
+
+  return transition ?
+      <Collapse {...commonProps} {...transitionProps}>
+        {children}
+      </Collapse>
+    : (eagerLoad || isOpen) && <div {...commonProps}>{children}</div>;
+});
+
 export default function Dropdown({
   collapseOnSelect = true,
-  eagerLoad = false,
   passInternalProp = true,
+  transition = false,
   ...props
 }: PropsWithChildren<Props>) {
   const dropdownOutlet = useOutlet('DROPDOWN');
@@ -61,14 +110,6 @@ export default function Dropdown({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const getSizeAndPositionStyles = (divElement: HTMLDivElement | null): CSSProperties => {
-    if (!divElement) return {};
-
-    const { width, x, y } = divElement.getBoundingClientRect();
-
-    return { top: y + 1, left: x, minWidth: width };
-  };
 
   const onOutsideClick = ({ target }: MouseEvent) => {
     const { current: triggerBtn } = props.triggerRef || {};
@@ -94,15 +135,7 @@ export default function Dropdown({
     <div ref={containerRef} className={containerStyles({ position: props.position })}>
       {dropdownOutlet &&
         ReactDOM.createPortal(
-          <Collapse
-            className='absolute rounded-lg bg-white shadow-xl'
-            style={getSizeAndPositionStyles(containerRef.current)}
-            in={props.isOpen}
-            mountOnEnter={!eagerLoad}
-            unmountOnExit={!eagerLoad}
-            timeout={{ enter: 150, exit: 0 }}
-            easing='ease-out'
-          >
+          <PortalRootElement transition={transition} containerRef={containerRef} isOpen={props.isOpen}>
             <OutsideClickHandler onOutsideClick={onOutsideClick} disabled={!props.isOpen}>
               <OverlayScroll>
                 {props.children && (
@@ -114,7 +147,7 @@ export default function Dropdown({
                 )}
               </OverlayScroll>
             </OutsideClickHandler>
-          </Collapse>,
+          </PortalRootElement>,
           dropdownOutlet
         )}
     </div>

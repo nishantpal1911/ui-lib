@@ -11,7 +11,12 @@ export const ItemSelectExample = ({ collapseOnSelect, optionsLength, ...args }: 
 
   return (
     <Select selectedOption={selectedOption} {...args}>
-      <Dropdown showBgOnSelected collapseOnSelect={collapseOnSelect} onSelect={setSelectedOption}>
+      <Dropdown
+        showBgOnSelected
+        transition={args.transition}
+        collapseOnSelect={collapseOnSelect}
+        onSelect={setSelectedOption}
+      >
         {options.map((value, index) => (
           <DropdownItem key={index} text={value} value={value} isSelected={value === selectedOption} />
         ))}

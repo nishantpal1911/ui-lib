@@ -61,6 +61,10 @@ const meta: Meta<typeof Select> = {
       options: ['item', 'checkbox', 'link'],
       table: { category: 'type', defaultValue: { summary: 'select' } },
     },
+    transition: {
+      type: 'boolean',
+      control: 'boolean',
+    },
     ...disabledArgs.reduce((acc, key) => ({ ...acc, [key]: { table: { disable: true } } }), {}),
   } as ExtendedArgTypes<typeof Select>,
 };
