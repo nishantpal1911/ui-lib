@@ -5,6 +5,7 @@ export * from 'src/components/ui/Dropdown';
 export * from 'src/components/ui/InlineFeedback';
 export * from 'src/components/ui/Input';
 export * from 'src/components/ui/Loader';
+export * from 'src/components/ui/Menu';
 export * from 'src/components/ui/Modal';
 export * from 'src/components/ui/OverlayScroll';
 export * from 'src/components/ui/Select';

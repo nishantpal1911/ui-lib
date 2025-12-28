@@ -71,7 +71,7 @@ const buttonStyles = tailwindCVA(
       intent: {
         primary: 'bg-primary hover:bg-primary/90 text-white shadow-sm',
         secondary: 'bg-secondary hover:bg-secondary/90 text-white shadow-sm',
-        tertiary: 'text-gray-600 bg-white hover:bg-gray-200 hover:text-black',
+        tertiary: 'bg-white hover:bg-gray-200',
         danger: 'bg-danger hover:bg-danger/90 text-white shadow-sm',
         success: 'bg-success hover:bg-success/90 text-white',
         unstyled: 'border-0 p-0 inset-ring-0',
@@ -239,7 +239,7 @@ export default function Button({
 export type {
   ButtonSize,
   ButtonOptions,
-  Props as ButtonPropsExt,
+  Props as ButtonProps,
   IconProps as ButtonIconProps,
   IconSize as ButtonIconSize,
 };

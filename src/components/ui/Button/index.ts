@@ -3,9 +3,9 @@ import {
   ButtonIconProps,
   ButtonIconSize,
   ButtonOptions,
-  ButtonPropsExt,
+  ButtonProps,
   ButtonSize,
 } from 'src/components/ui/Button/Button';
 
 export { Button };
-export type { ButtonIconProps, ButtonIconSize, ButtonOptions, ButtonSize, ButtonPropsExt };
+export type { ButtonIconProps, ButtonIconSize, ButtonOptions, ButtonSize, ButtonProps };

@@ -36,7 +36,7 @@ const labelStyles = tailwindCVA('flex w-fit cursor-pointer items-center select-n
   },
 });
 
-const checkboxStyles = tailwindCVA('enabled:cursor-pointer', {
+const checkboxStyles = tailwindCVA('enabled:cursor-pointer accent-blue-500', {
   variants: {
     size: {
       xs: 'h-4 w-4',
