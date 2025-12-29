@@ -10,7 +10,15 @@ const getCheckboxOptions = (optionsLength = 5): { value: string; isSelected: boo
     .map((_val, index) => ({ value: `Item ${index + 1}`, isSelected: false }));
 };
 
-export const MenuCheckboxExample = ({ collapseOnSelect, optionsLength, transition, ...args }: any) => {
+export const MenuCheckboxExample = ({
+  closeOnContainerScroll,
+  closeOnSelect,
+  eagerLoad,
+  optionsLength,
+  placement,
+  transition,
+  ...args
+}: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState(() => getCheckboxOptions(optionsLength));
 
@@ -27,11 +35,17 @@ export const MenuCheckboxExample = ({ collapseOnSelect, optionsLength, transitio
   };
 
   return (
-    <Menu isOpen={isOpen} openMenu={() => setIsOpen(true)} closeMenu={() => setIsOpen(false)}>
+    <Menu
+      isOpen={isOpen}
+      openMenu={() => setIsOpen(true)}
+      closeMenu={() => setIsOpen(false)}
+      closeOnContainerScroll={closeOnContainerScroll}
+      placement={placement}
+    >
       <Menu.Trigger {...args} outlined icon={{ svg: isOpen ? ArrowDropUpIcon : ArrowDropDownIcon, placement: 'right' }}>
         Select Items
       </Menu.Trigger>
-      <Menu.Container transition={transition}>
+      <Menu.Container eagerLoad={eagerLoad} transition={transition}>
         {options.map(({ isSelected, value }, index) => (
           <Menu.ItemCheckbox
             key={index}

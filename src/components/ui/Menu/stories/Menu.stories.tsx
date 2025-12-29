@@ -38,9 +38,13 @@ const meta: Meta<typeof Menu> = {
       type: 'boolean',
       table: { category: 'dimension', defaultValue: { summary: false } },
     },
-    collapseOnSelect: {
+    closeOnSelect: {
       type: 'boolean',
       table: { defaultValue: { summary: false } },
+    },
+    closeOnContainerScroll: {
+      type: 'boolean',
+      table: { defaultValue: { summary: true } },
     },
     optionsLength: {
       name: 'options.length',
@@ -55,13 +59,36 @@ const meta: Meta<typeof Menu> = {
     type: {
       type: 'string',
       control: 'select',
-      options: ['item', 'checkbox', 'link'],
+      options: ['item', 'checkbox'],
       table: { category: 'type', defaultValue: { summary: 'item' } },
     },
     transition: {
       type: 'boolean',
       control: 'boolean',
       table: { defaultValue: { summary: false } },
+    },
+    eagerLoad: {
+      type: 'boolean',
+      control: 'boolean',
+      table: { defaultValue: { summary: false } },
+    },
+    placement: {
+      type: 'select',
+      options: [
+        'top',
+        'top-start',
+        'top-end',
+        'bottom',
+        'bottom-start',
+        'bottom-end',
+        'right',
+        'right-start',
+        'right-end',
+        'left',
+        'left-start',
+        'left-end',
+      ],
+      table: { defaultValue: { summary: 'bottom' } },
     },
     ...disabledArgs.reduce((acc, key) => ({ ...acc, [key]: { table: { disable: true } } }), {}),
   } as ExtendedArgTypes<typeof Menu>,
@@ -71,8 +98,6 @@ const MainTemplate: StoryFn<typeof Menu> = ({ type, ...args }: any) => {
   switch (type) {
     case 'checkbox':
       return <MenuCheckboxExample {...args} />;
-    case 'link':
-      return <LinkSelectExample {...args} />;
   }
 
   return <MenuItemExample {...args} />;
@@ -85,7 +110,5 @@ export const Main: Story = MainTemplate.bind({});
 export const Item: Story = (MenuItemExample as StoryFn<typeof Menu>).bind({});
 
 export const Checkbox: Story = (MenuCheckboxExample as StoryFn<typeof Menu>).bind({});
-
-// export const Link: Story = (LinkSelectExample as StoryFn<typeof Menu>).bind({});
 
 export default meta;

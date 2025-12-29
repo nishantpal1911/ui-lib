@@ -26,11 +26,11 @@ const highlighterStyles = cva('absolute top-0 bottom-0 left-0 bg-blue-200', {
 });
 
 export default function MenuItem({ children, className, isSelected, onClick, ...restProps }: Props) {
-  const { collapseOnSelect, setIsMenuOpen } = useMenuContext();
+  const { closeOnSelect, setIsMenuOpen } = useMenuContext();
   const shouldHighlightItem = isSelected && !restProps.disabled;
 
   const selectHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (collapseOnSelect) {
+    if (closeOnSelect) {
       setIsMenuOpen(false);
     }
     onClick?.(event);

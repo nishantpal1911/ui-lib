@@ -1,4 +1,5 @@
-import { PropsWithChildren, useCallback, useRef } from 'react';
+import { autoUpdate, flip, Placement, shift, size, useFloating } from '@floating-ui/react-dom';
+import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 
 import MenuContainer from 'src/components/ui/Menu/MenuContainer';
 import { MenuContext } from 'src/components/ui/Menu/MenuContext';
@@ -10,10 +11,40 @@ interface Props {
   isOpen: boolean;
   openMenu: () => void;
   closeMenu: () => void;
-  collapseOnSelect?: boolean;
+  placement?: Placement;
+  closeOnSelect?: boolean;
+  closeOnContainerScroll?: boolean;
 }
 
-function Menu({ children, closeMenu, collapseOnSelect, isOpen, openMenu }: PropsWithChildren<Props>) {
+const OVERFLOW_PADDING_OFFSET = 8;
+
+function Menu({
+  children,
+  closeMenu,
+  closeOnContainerScroll = true,
+  closeOnSelect = false,
+  isOpen,
+  openMenu,
+  placement = 'bottom',
+}: PropsWithChildren<Props>) {
+  const [maxHeight, setMaxHeight] = useState<number>();
+  const { elements, floatingStyles, refs, update } = useFloating({
+    open: isOpen,
+    middleware: [
+      shift({ padding: OVERFLOW_PADDING_OFFSET }),
+      flip({ padding: OVERFLOW_PADDING_OFFSET, fallbackStrategy: 'bestFit' }),
+      size({
+        padding: OVERFLOW_PADDING_OFFSET,
+        apply({ availableHeight, elements }) {
+          Object.assign(elements.floating.style, {
+            maxHeight: `${availableHeight}px`,
+          });
+          setMaxHeight(availableHeight);
+        },
+      }),
+    ],
+    placement,
+  });
   const setIsMenuOpen = useCallback(
     (open: boolean) => {
       if (open) {
@@ -24,10 +55,39 @@ function Menu({ children, closeMenu, collapseOnSelect, isOpen, openMenu }: Props
     },
     [openMenu, closeMenu]
   );
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (isOpen && elements.reference && elements.floating) {
+      return autoUpdate(elements.reference, elements.floating, update);
+    }
+  }, [isOpen, elements, update]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const handleScroll = (ev: Event) => {
+        if (refs.floating?.current?.contains(ev.target as Node)) return;
+        setIsMenuOpen(false);
+      };
+      const handleResize = () => {
+        setIsMenuOpen(false);
+      };
+
+      if (closeOnContainerScroll) {
+        window.addEventListener('scroll', handleScroll);
+      }
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        if (closeOnContainerScroll) {
+          window.removeEventListener('scroll', handleScroll);
+        }
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, [isOpen, refs.floating, setIsMenuOpen, closeOnContainerScroll]);
 
   return (
-    <MenuContext.Provider value={{ isMenuOpen: isOpen, setIsMenuOpen, collapseOnSelect, triggerRef }}>
+    <MenuContext.Provider value={{ isMenuOpen: isOpen, setIsMenuOpen, closeOnSelect, floatingStyles, refs, maxHeight }}>
       {children}
     </MenuContext.Provider>
   );

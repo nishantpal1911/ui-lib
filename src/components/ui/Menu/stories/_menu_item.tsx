@@ -4,7 +4,15 @@ import { useMemo, useState } from 'react';
 
 import { Menu } from 'src/components/ui/Menu';
 
-export const MenuItemExample = ({ collapseOnSelect, optionsLength, transition, ...args }: any) => {
+export const MenuItemExample = ({
+  closeOnContainerScroll,
+  closeOnSelect,
+  eagerLoad,
+  optionsLength,
+  placement,
+  transition,
+  ...args
+}: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string>();
   const options = useMemo(
@@ -17,12 +25,14 @@ export const MenuItemExample = ({ collapseOnSelect, optionsLength, transition, .
       isOpen={isOpen}
       openMenu={() => setIsOpen(true)}
       closeMenu={() => setIsOpen(false)}
-      collapseOnSelect={collapseOnSelect}
+      closeOnSelect={closeOnSelect}
+      closeOnContainerScroll={closeOnContainerScroll}
+      placement={placement}
     >
       <Menu.Trigger {...args} outlined icon={{ svg: isOpen ? ArrowDropUpIcon : ArrowDropDownIcon, placement: 'right' }}>
         Open Menu
       </Menu.Trigger>
-      <Menu.Container transition={transition}>
+      <Menu.Container eagerLoad={eagerLoad} transition={transition}>
         {options.map((value, index) => (
           <Menu.Item
             key={index}

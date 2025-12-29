@@ -1,9 +1,13 @@
+import { UseFloatingReturn } from '@floating-ui/react-dom';
 import React, { createContext, useContext } from 'react';
 
 interface MenuContextOptions {
   isMenuOpen: boolean;
   triggerRef?: React.RefObject<HTMLButtonElement | null>;
-  collapseOnSelect?: boolean;
+  floatingStyles?: React.CSSProperties;
+  refs?: UseFloatingReturn['refs'];
+  closeOnSelect?: boolean;
+  maxHeight?: number;
   setIsMenuOpen: (value: boolean) => void;
 }
 
