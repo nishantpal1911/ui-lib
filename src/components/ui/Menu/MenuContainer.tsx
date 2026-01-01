@@ -1,6 +1,6 @@
 import Fade, { FadeProps } from '@mui/material/Fade';
 import { cva } from 'class-variance-authority';
-import React, { ComponentProps, PropsWithChildren } from 'react';
+import React, { ComponentProps, PropsWithChildren, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { twMerge } from 'tailwind-merge';
@@ -25,6 +25,10 @@ const portalRootStyles = cva('rounded-lg bg-white shadow-xl', {
   },
 });
 
+/**
+ * Memoized wrapper for the portal root element.
+ * Handles transition animation and conditional rendering based on menu state.
+ */
 const PortalRootElement = React.memo(function ({
   children,
   eagerLoad,
@@ -55,6 +59,10 @@ const PortalRootElement = React.memo(function ({
     : (eagerLoad || isMenuOpen) && <div {...commonProps}>{children}</div>;
 });
 
+/**
+ * Container that renders menu items in a portal with scrollable content.
+ * Handles outside click detection and automatic menu closure.
+ */
 export default function MenuContainer({
   children,
   className,
@@ -63,13 +71,80 @@ export default function MenuContainer({
   ...restProps
 }: PropsWithChildren<Props>) {
   const menuOutlet = useOutlet('DROPDOWN');
-  const { isMenuOpen, maxHeight, refs, setIsMenuOpen } = useMenuContext();
+  const { focusedIndex, isMenuOpen, maxHeight, menuId, refs, setFocusedIndex, setIsMenuOpen, triggerId } =
+    useMenuContext();
 
+  /**
+   * Close menu when clicking outside, but ignore clicks on the trigger button
+   */
   const onOutsideClick = ({ target }: MouseEvent) => {
     const { current: triggerBtn } = refs?.reference || {};
     if (!isMenuOpen || !triggerBtn || (triggerBtn as HTMLElement).contains(target as Node)) return;
     setIsMenuOpen(false);
   };
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      setFocusedIndex(null);
+      const { current: triggerBtn } = refs?.reference || {};
+      if (triggerBtn) {
+        (triggerBtn as HTMLElement).focus();
+      }
+    } else {
+      setFocusedIndex(0);
+    }
+  }, [isMenuOpen, refs?.reference, setFocusedIndex]);
+
+  /**
+   * Handle keyboard navigation within the menu:
+   * - ArrowDown: Move to next item
+   * - ArrowUp: Move to previous item
+   * - Home: Jump to first item
+   * - End: Jump to last item
+   * - Escape: Close menu and return focus to trigger
+   * - Tab: Close menu and allow default tab behavior
+   */
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!isMenuOpen) return;
+      const menuItems = refs?.floating.current?.querySelectorAll<HTMLElement>('[data-js-menuitem]');
+      if (!menuItems || menuItems.length === 0 || focusedIndex === null) return;
+
+      switch (event.key) {
+        case 'ArrowDown': {
+          event.preventDefault();
+          setFocusedIndex((focusedIndex + 1) % menuItems.length);
+          break;
+        }
+        case 'ArrowUp': {
+          event.preventDefault();
+          setFocusedIndex((focusedIndex - 1 + menuItems.length) % menuItems.length);
+          break;
+        }
+        case 'Home': {
+          event.preventDefault();
+          setFocusedIndex(0);
+          break;
+        }
+        case 'End': {
+          event.preventDefault();
+          setFocusedIndex(menuItems.length - 1);
+          break;
+        }
+        case 'Escape': {
+          event.preventDefault();
+          setIsMenuOpen(false);
+          break;
+        }
+        case 'Tab': {
+          // Close menu and allow default tab behavior
+          setIsMenuOpen(false);
+          break;
+        }
+      }
+    },
+    [isMenuOpen, refs?.floating, focusedIndex, setFocusedIndex, setIsMenuOpen]
+  );
 
   return (
     menuOutlet &&
@@ -78,7 +153,15 @@ export default function MenuContainer({
         <OutsideClickHandler onOutsideClick={onOutsideClick} disabled={!isMenuOpen}>
           <OverlayScroll style={{ maxHeight: maxHeight && `${maxHeight}px` }}>
             {children && (
-              <div className={dropdownStyles(className)} {...restProps}>
+              <div
+                role='menu'
+                id={menuId}
+                aria-labelledby={triggerId}
+                aria-orientation='vertical'
+                onKeyDown={handleKeyDown}
+                className={dropdownStyles(className)}
+                {...restProps}
+              >
                 {children}
               </div>
             )}

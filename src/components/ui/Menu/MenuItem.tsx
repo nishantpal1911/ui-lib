@@ -8,8 +8,7 @@ import { TextOrChildren } from 'src/types';
 
 type Props = TextOrChildren & { isSelected?: boolean } & ButtonProps;
 
-export const dropdownItemDefaultClasses = 'w-full text-left';
-
+// Visual indicator for selected menu items (left border highlight)
 const highlighterStyles = cva('absolute top-0 bottom-0 left-0 bg-blue-200', {
   variants: {
     size: {
@@ -25,6 +24,10 @@ const highlighterStyles = cva('absolute top-0 bottom-0 left-0 bg-blue-200', {
   },
 });
 
+/**
+ * Individual menu item that can be selected and optionally highlighted.
+ * Supports automatic menu closure on selection via closeOnSelect prop.
+ */
 export default function MenuItem({ children, className, isSelected, onClick, ...restProps }: Props) {
   const { closeOnSelect, setIsMenuOpen } = useMenuContext();
   const shouldHighlightItem = isSelected && !restProps.disabled;
@@ -38,11 +41,13 @@ export default function MenuItem({ children, className, isSelected, onClick, ...
 
   return (
     <Button
+      data-js-menuitem
+      role='menuitem'
+      tabIndex={-1}
       intent='tertiary'
       onClick={selectHandler}
       className={cx(
-        dropdownItemDefaultClasses,
-        'rounded-none transition-none',
+        'w-full rounded-none text-left transition-none focus-visible:ring-0 focus-visible:inset-ring-2',
         shouldHighlightItem && 'bg-blue-50 hover:bg-blue-50',
         className
       )}

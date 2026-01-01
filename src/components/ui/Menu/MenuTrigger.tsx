@@ -6,8 +6,12 @@ import { useMenuContext } from 'src/components/ui/Menu/MenuContext';
 
 type Props = ButtonProps;
 
+/**
+ * Button that triggers the menu open/close state.
+ * Automatically manages the reference element for floating element positioning.
+ */
 export default function MenuTrigger({ children, onClick, ...props }: PropsWithChildren<Props>) {
-  const { isMenuOpen, refs, setIsMenuOpen } = useMenuContext();
+  const { isMenuOpen, menuId, refs, setIsMenuOpen, triggerId } = useMenuContext();
 
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     setIsMenuOpen(!isMenuOpen);
@@ -15,7 +19,16 @@ export default function MenuTrigger({ children, onClick, ...props }: PropsWithCh
   };
 
   return (
-    <Button ref={refs?.setReference} intent='tertiary' onClick={onClickHandler} {...props}>
+    <Button
+      ref={refs?.setReference}
+      id={triggerId}
+      intent='tertiary'
+      onClick={onClickHandler}
+      aria-haspopup='menu'
+      aria-expanded={isMenuOpen}
+      aria-controls={menuId}
+      {...props}
+    >
       {children}
     </Button>
   );

@@ -3,6 +3,7 @@ import { cva } from 'class-variance-authority';
 import { Checkbox, CheckboxPropsExt } from 'src/components/ui';
 import { dropdownItemDefaultClasses } from 'src/components/ui/Dropdown/Item';
 
+// Styling for checkbox menu items with consistent sizing and hover states
 const styles = cva(`${dropdownItemDefaultClasses} hover:bg-gray-200`, {
   variants: {
     size: {
@@ -18,6 +19,20 @@ const styles = cva(`${dropdownItemDefaultClasses} hover:bg-gray-200`, {
   },
 });
 
-export default function MenuItemCheckbox({ className, ...restProps }: CheckboxPropsExt) {
-  return <Checkbox {...restProps} className={styles({ size: restProps.size, className })} />;
+/**
+ * Checkbox variant of menu item for multi-select menus.
+ * Wraps the Checkbox component with menu-specific styling.
+ */
+export default function MenuItemCheckbox({ checked, className, ...restProps }: CheckboxPropsExt) {
+  return (
+    <Checkbox
+      data-js-menuitem
+      tabIndex={-1}
+      role='menuitemcheckbox'
+      aria-checked={checked}
+      checked={checked}
+      {...restProps}
+      className={styles({ size: restProps.size, className })}
+    />
+  );
 }
