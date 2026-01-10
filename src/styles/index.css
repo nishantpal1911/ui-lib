@@ -47,7 +47,7 @@
   }
 
   a {
-    @apply text-primary-hover underline;
+    @apply text-blue-400 underline;
   }
 }
 
