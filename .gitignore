@@ -27,3 +27,4 @@ storybook-static
 .env
 *.tgz
 .yarn
+.markdown

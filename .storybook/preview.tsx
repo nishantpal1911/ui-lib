@@ -4,7 +4,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { Controls, Description, Primary, Subtitle, Title } from '@storybook/blocks';
 import { Preview } from '@storybook/react';
 import React from 'react';
-import { BrowserRouter } from 'react-router';
 
 import 'src/styles/index.css';
 
@@ -38,11 +37,9 @@ const preview: Preview = {
       <React.StrictMode>
         <StyledEngineProvider injectFirst>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <BrowserRouter>
-              <ToastProvider>
-                <_Story storyFn={storyFn} />
-              </ToastProvider>
-            </BrowserRouter>
+            <ToastProvider>
+              <_Story storyFn={storyFn} />
+            </ToastProvider>
           </LocalizationProvider>
         </StyledEngineProvider>
       </React.StrictMode>

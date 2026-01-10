@@ -8,6 +8,7 @@ interface CheckboxOptions extends VariantProps<typeof labelStyles> {
   indeterminate?: boolean;
   label?: string;
   disabled?: boolean;
+  required?: boolean;
 }
 
 interface Props extends Omit<ComponentProps<'input'>, 'size'>, CheckboxOptions {}
@@ -19,43 +20,54 @@ const labelStyles = tailwindCVA('flex w-fit cursor-pointer items-center select-n
       right: '',
     },
     size: {
-      xs: 'text-xs gap-1.5',
-      sm: 'text-sm gap-2',
-      md: 'text-base gap-2',
-      lg: 'text-base gap-2.5',
-      xl: 'text-lg gap-3',
+      xs: 'text-sm gap-1.5',
+      sm: 'text-base gap-2',
+      md: 'text-lg gap-2',
+      lg: 'text-xl gap-2.5',
+      xl: 'text-2xl gap-3',
     },
     disabled: {
-      true: 'text-gray-600 cursor-default',
+      true: 'text-gray-800 cursor-default',
     },
   },
   defaultVariants: {
-    size: 'md',
+    size: 'sm',
     labelPlacement: 'right',
   },
 });
 
-const checkboxStyles = tailwindCVA('enabled:cursor-pointer', {
+const checkboxStyles = tailwindCVA('enabled:cursor-pointer accent-blue-500', {
   variants: {
     size: {
-      xs: 'h-3 w-3',
-      sm: 'h-3.5 w-3.5',
-      md: 'h-4 w-4',
-      lg: 'h-4.5 w-4.5',
-      xl: 'h-5 w-5',
+      xs: 'h-4 w-4',
+      sm: 'h-4.5 w-4.5',
+      md: 'h-5 w-5',
+      lg: 'h-5.5 w-5.5',
+      xl: 'h-6 w-6',
     },
   },
   defaultVariants: {
-    size: 'md',
+    size: 'sm',
   },
 });
 
 const generateId = () => `Checkbox__${uuidv4()}`;
 
 export default function Checkbox(props: Props) {
-  const { className, disabled, indeterminate, label, labelPlacement, size, ...restProps } = props;
+  const { className, disabled, indeterminate, label, labelPlacement, required, size, ...restProps } = props;
   const idRef = useRef(props.id || (label ? generateId() : undefined));
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Accessibility warning: checkbox must have an accessible name
+  useEffect(() => {
+    if (import.meta.env.DEV && !label && !restProps['aria-label'] && !restProps['aria-labelledby']) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'Checkbox: Must provide either a "label" prop, "aria-label", or "aria-labelledby" for accessibility.'
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -70,6 +82,8 @@ export default function Checkbox(props: Props) {
       type='checkbox'
       className={checkboxStyles({ size, className: !label && className })}
       disabled={disabled}
+      required={required}
+      aria-required={required}
       {...restProps}
     />
   );
@@ -77,7 +91,14 @@ export default function Checkbox(props: Props) {
   return label ?
       <label htmlFor={idRef.current} className={labelStyles({ size, labelPlacement, disabled, className })}>
         {Input}
-        <span>{label}</span>
+        <span>
+          {label}
+          {required && (
+            <span className='text-red-600' aria-hidden='true'>
+              {' *'}
+            </span>
+          )}
+        </span>
       </label>
     : Input;
 }

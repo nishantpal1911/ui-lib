@@ -1,10 +1,11 @@
+import { cx } from 'class-variance-authority';
 import { OverlayScrollbars, type PartialOptions } from 'overlayscrollbars';
 import 'overlayscrollbars/styles/overlayscrollbars.css';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import { CSSProperties, PropsWithChildren, useRef } from 'react';
 
 interface Props {
-  styles?: CSSProperties;
+  style?: CSSProperties;
   options?: PartialOptions;
   className?: string;
 }
@@ -29,8 +30,8 @@ export default function OverlayScroll(props: PropsWithChildren<Props>) {
         ...(props.options || {}),
       }}
       events={{ scroll: handleScroll }}
-      style={props.styles}
-      className={props.className}
+      style={props.style}
+      className={cx('overscroll-contain', props.className)}
     >
       {props.children}
     </OverlayScrollbarsComponent>

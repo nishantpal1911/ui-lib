@@ -2,7 +2,7 @@ import { cx } from 'class-variance-authority';
 import { ChangeEvent, useRef, useState } from 'react';
 
 import { Button, InlineFeedback } from 'src/components/ui';
-import { ButtonOptions, ButtonPropsExt } from 'src/components/ui/Button';
+import { ButtonOptions, ButtonProps } from 'src/components/ui/Button';
 
 interface FileInputOptions extends ButtonOptions {
   onFileChange: (file: File) => void;
@@ -13,7 +13,7 @@ interface FileInputOptions extends ButtonOptions {
   containerClass?: string;
 }
 
-interface Props extends FileInputOptions, Omit<ButtonPropsExt, 'onError' | 'onClick'> {}
+interface Props extends FileInputOptions, Omit<ButtonProps, 'onError' | 'onClick'> {}
 
 export default function FileInput({
   containerClass,
